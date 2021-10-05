@@ -2,6 +2,7 @@
   <div class="border-2 border-gray-700">
     hello {{ user.displayName }}
     <p>{{ errorMessage }}</p>
+    <p>{{ test }}</p>
   </div>
   <button @click="googleSignIn">
     Sign In with Google
@@ -16,6 +17,7 @@ import {
   GoogleAuthProvider
 } from 'firebase/auth';
 import { provider } from '../firebase';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Login',
@@ -45,6 +47,9 @@ export default {
         this.credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
+  },
+  computed: {
+    ...mapState(['test'])
   },
   methods: {
     googleSignIn() {
