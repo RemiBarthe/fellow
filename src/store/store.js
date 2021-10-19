@@ -2,9 +2,13 @@ import { createStore } from 'vuex';
 import VuexPersist from 'vuex-persist';
 
 export const SET_CONNECTED_USER = 'SET_CONNECTED_USER';
+export const SET_START_ANIMATION_OVER = 'SET_START_ANIMATION_OVER';
 
 const vuexPersist = new VuexPersist({
-  storage: window.localStorage
+  storage: window.localStorage,
+  reducer: (state) => ({
+    connectedUser: state.connectedUser
+  })
 });
 
 export const store = createStore({
@@ -17,12 +21,16 @@ export const store = createStore({
         metadata: {},
         photoUrl: '',
         uid: ''
-      }
+      },
+      startAnimationOver: false
     };
   },
   actions: {
     setConnectedUser({ commit }, payload) {
       commit(SET_CONNECTED_USER, payload);
+    },
+    setStartAnimationOver({ commit }, payload) {
+      commit(SET_START_ANIMATION_OVER, payload);
     }
   },
   mutations: {
@@ -32,6 +40,9 @@ export const store = createStore({
       state.connectedUser.metadata = payload.metadata;
       state.connectedUser.photoUrl = payload.photoUrl;
       state.connectedUser.uid = payload.uid;
+    },
+    [SET_START_ANIMATION_OVER](state, payload) {
+      state.startAnimationOver = payload;
     }
   },
   plugins: [vuexPersist.plugin]

@@ -1,0 +1,43 @@
+<template>
+  <div class="flex h-screen">
+    <div class="m-auto">
+      <h1 class="font-black text-title-max font-text flex">
+        {{ animatedTitle }}
+        <span class="text-primary">.</span>
+      </h1>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Start',
+  data: () => ({
+    animatedTitle: 'f',
+    fellowArray: ['f', 'e', 'l', 'l', 'o', 'w']
+  }),
+  mounted() {
+    let letterNumber = 1;
+    setTimeout(() => {
+      let animateTitle = setInterval(() => {
+        this.animatedTitle += this.fellowArray[letterNumber];
+        letterNumber++;
+
+        if (letterNumber >= this.fellowArray.length)
+          clearInterval(animateTitle);
+      }, 80);
+
+      setTimeout(() => {
+        this.$store.dispatch('setStartAnimationOver', true);
+      }, 1500);
+    }, 1500);
+  },
+  methods: {}
+};
+</script>
+
+<style scoped>
+.h1 {
+  transition-duration: 1s;
+}
+</style>

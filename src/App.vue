@@ -1,26 +1,30 @@
 <template>
-  hello {{ connectedUser?.displayName }} <br />
-  <Login v-if="!connectedUser.uid" />
-  <button v-else @click="signOutUser">
-    Sign Out
-  </button>
+  <Start v-if="!startAnimationOver" />
+  <template v-else>
+    <Login v-if="!connectedUser?.uid" />
+    <button v-else @click="signOutUser">
+      Sign Out
+    </button>
+  </template>
 </template>
 
 <script>
 import Login from './components/Login.vue';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { mapActions, mapState } from 'vuex';
+import Start from './containers/Start.vue';
 
 export default {
   name: 'App',
   components: {
-    Login
+    Login,
+    Start
   },
   data: () => ({
     auth: ''
   }),
   computed: {
-    ...mapState(['connectedUser'])
+    ...mapState(['connectedUser', 'startAnimationOver'])
   },
   created() {
     this.auth = getAuth();
