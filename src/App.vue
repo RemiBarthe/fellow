@@ -1,9 +1,9 @@
 <template>
-  <Start v-if="!startAnimationOver" />
+  <StartAnimation v-if="!startAnimationOver" />
   <template v-else>
-    <Login v-if="!connectedUser?.uid" />
+    <Login v-if="!connectedUser.uid" />
     <button v-else @click="signOutUser">
-      Sign Out
+      Sign Out {{ connectedUser.displayName }}
     </button>
   </template>
 </template>
@@ -12,13 +12,13 @@
 import Login from './components/Login.vue';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { mapActions, mapState } from 'vuex';
-import Start from './containers/Start.vue';
+import StartAnimation from './containers/StartAnimation.vue';
 
 export default {
   name: 'App',
   components: {
     Login,
-    Start
+    StartAnimation
   },
   data: () => ({
     auth: ''

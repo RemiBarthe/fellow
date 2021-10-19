@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'Start',
+  name: 'StartAnimation',
   data: () => ({
     animatedTitle: 'f',
     fellowArray: ['f', 'e', 'l', 'l', 'o', 'w']
@@ -25,11 +25,11 @@ export default {
 
         if (letterNumber >= this.fellowArray.length)
           clearInterval(animateTitle);
-      }, 80);
+      }, 90);
 
       setTimeout(() => {
         this.$store.dispatch('setStartAnimationOver', true);
-      }, 1500);
+      }, 2000);
     }, 1500);
   },
   methods: {}
