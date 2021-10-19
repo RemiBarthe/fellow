@@ -2,11 +2,15 @@
   <button @click="googleSignIn">
     Sign In with Google
   </button>
+  <br />
+  <button @click="facebookSignIn">
+    Sign In with Facebook
+  </button>
 </template>
 
 <script>
 import { getAuth, signInWithRedirect } from 'firebase/auth';
-import { provider } from '../firebase';
+import { googleAuthProvider, facebookAuthProvider } from '../firebase';
 
 export default {
   name: 'Login',
@@ -20,7 +24,11 @@ export default {
   methods: {
     googleSignIn() {
       const auth = getAuth();
-      signInWithRedirect(auth, provider);
+      signInWithRedirect(auth, googleAuthProvider);
+    },
+    facebookSignIn() {
+      const auth = getAuth();
+      signInWithRedirect(auth, facebookAuthProvider);
     }
   }
 };
