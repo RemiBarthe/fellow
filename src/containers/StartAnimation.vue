@@ -1,12 +1,12 @@
 <template>
-  <div class="flex h-screen">
+  <section class="flex h-screen">
     <div class="m-auto">
       <h1 class="font-black text-title-max font-text flex">
         {{ animatedTitle }}
         <span class="text-primary">.</span>
       </h1>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

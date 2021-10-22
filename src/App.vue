@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import Login from './components/Login.vue';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { mapActions, mapState } from 'vuex';
 import StartAnimation from './containers/StartAnimation.vue';
+import Login from './containers/Login.vue';
 
 export default {
   name: 'App',
