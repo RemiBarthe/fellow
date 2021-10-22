@@ -28,11 +28,9 @@ module.exports = {
       purple: colors.violet,
       pink: colors.pink,
       primary: '#4062BB',
-      secondary: '#5D592D',
-      stroke: '#3C3F2D',
-      dark: '#151F2D',
-      orange: '#f6b42c',
-      'light-dark': '#202A38'
+      secondary: '#59C3C3',
+      thirdary: '#F45B69',
+      'light-gray': '#F1F1F1'
     },
     spacing: {
       px: '1px',
@@ -153,7 +151,7 @@ module.exports = {
     borderRadius: {
       none: '0px',
       sm: '0.125rem',
-      DEFAULT: '0.25rem',
+      DEFAULT: '1.25rem',
       md: '0.375rem',
       lg: '0.625rem',
       xl: '0.75rem',
