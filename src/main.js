@@ -1,5 +1,12 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import './assets/css/tailwind.css'
+import { createApp } from 'vue';
+import App from './App.vue';
+import { store } from './store/store';
+import './firebase';
 
-createApp(App).mount('#app')
+import './assets/css/tailwind.css';
+import FontAwesomeIcon from './utilities/fontawesome-icons';
+
+createApp(App)
+  .component('fontAwesomeIcon', FontAwesomeIcon)
+  .use(store)
+  .mount('#app');
