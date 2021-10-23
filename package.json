@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
+    "test:coverage": "npx jest --silent --ci --coverage --coverageReporters='text' --coverageReporters='text-summary'",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
