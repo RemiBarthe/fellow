@@ -1,38 +1,40 @@
 <template>
-  <StartAnimation v-if="!startAnimationOver" />
-  <template v-else>
-    <Login v-if="!connectedUser.uid" />
-    <button v-else @click="signOutUser">
-      Sign Out {{ connectedUser.displayName }}
-    </button>
-  </template>
+  <div class="font-text text-base font-normal">
+    <StartAnimation v-if="!startAnimationOver" />
+    <template v-else>
+      <Login v-if="!connectedUser.uid" />
+
+      <Dashboard v-else />
+    </template>
+  </div>
 </template>
 
 <script>
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { mapActions, mapState } from 'vuex';
 import StartAnimation from './containers/StartAnimation.vue';
 import Login from './containers/Login.vue';
+import Dashboard from './containers/Dashboard.vue';
 import { db } from './firebase';
 
 export default {
   name: 'App',
   components: {
     Login,
-    StartAnimation
+    StartAnimation,
+    Dashboard
   },
   data: () => ({
-    auth: '',
     tempUser: {}
   }),
   computed: {
     ...mapState(['connectedUser', 'startAnimationOver'])
   },
   created() {
-    this.auth = getAuth();
+    const auth = getAuth();
 
-    onAuthStateChanged(this.auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         this.tempUser = {
           displayName: user.displayName,
@@ -60,16 +62,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(['setConnectedUser']),
-    signOutUser() {
-      signOut(this.auth)
-        .then(() => {
-          // Sign-out successful.
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    ...mapActions(['setConnectedUser'])
   }
 };
 </script>
