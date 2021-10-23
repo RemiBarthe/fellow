@@ -17,22 +17,26 @@ export default {
     fellowArray: ['f', 'e', 'l', 'l', 'o', 'w']
   }),
   mounted() {
-    let letterNumber = 1;
-    setTimeout(() => {
-      let animateTitle = setInterval(() => {
-        this.animatedTitle += this.fellowArray[letterNumber];
-        letterNumber++;
-
-        if (letterNumber >= this.fellowArray.length)
-          clearInterval(animateTitle);
-      }, 90);
-
-      setTimeout(() => {
-        this.$store.dispatch('setStartAnimationOver', true);
-      }, 2000);
-    }, 1500);
+    this.animateTitle();
   },
-  methods: {}
+  methods: {
+    animateTitle() {
+      let letterNumber = 1;
+      setTimeout(() => {
+        let animateTitle = setInterval(() => {
+          this.animatedTitle += this.fellowArray[letterNumber];
+          letterNumber++;
+
+          if (letterNumber >= this.fellowArray.length)
+            clearInterval(animateTitle);
+        }, 90);
+
+        setTimeout(() => {
+          this.$store.dispatch('setStartAnimationOver', true);
+        }, 2000);
+      }, 1500);
+    }
+  }
 };
 </script>
 
