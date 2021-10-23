@@ -7,6 +7,6 @@ import './assets/css/tailwind.css';
 import FontAwesomeIcon from './utilities/fontawesome-icons';
 
 createApp(App)
-  .component('fontAwesomeIcon', FontAwesomeIcon)
+  .component('FontAwesomeIcon', FontAwesomeIcon)
   .use(store)
   .mount('#app');

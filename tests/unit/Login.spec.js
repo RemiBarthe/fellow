@@ -4,7 +4,11 @@ import FellowTitle from '@/components/FellowTitle.vue';
 import Button from '@/components/Button.vue';
 
 describe('Login.vue', () => {
-  const wrapper = shallowMount(Login);
+  const wrapper = shallowMount(Login, {
+    global: {
+      stubs: ['FontAwesomeIcon']
+    }
+  });
 
   it('renders FellowTitle component', () => {
     const fellowTitle = wrapper.findComponent(FellowTitle);

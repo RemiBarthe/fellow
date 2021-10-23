@@ -4,12 +4,12 @@
       <FellowTitle class="text-title-lg mb-4 md:mb-5" />
 
       <Button class="bg-black text-white mb-2 md:mb-2.5" @click="googleSignIn">
-        <fontAwesomeIcon :icon="['fab', 'google']" class="mr-2" />Se connecter
+        <FontAwesomeIcon :icon="['fab', 'google']" class="mr-2" />Se connecter
         avec Google
       </Button>
 
       <Button class="bg-primary text-white" @click="facebookSignIn">
-        <fontAwesomeIcon :icon="['fab', 'facebook']" class="mr-2" />Se connecter
+        <FontAwesomeIcon :icon="['fab', 'facebook']" class="mr-2" />Se connecter
         avec Facebook
       </Button>
     </div>
