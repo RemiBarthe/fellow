@@ -1,6 +1,9 @@
 <template>
-  <div class="flex flex-col items-start hover:bg-white p-5 rounded">
-    <div class="flex items-center">
+  <div
+    class="flex flex-col items-start p-5 rounded hover:bg-white cursor-pointer"
+    :class="{ 'bg-white': showSettings }"
+  >
+    <div class="flex items-center" @click="showSettings = !showSettings">
       <p class="mr-2.5">{{ connectedUser.displayName }}</p>
       <img
         :alt="`${connectedUser.displayName} profile picture`"
@@ -10,24 +13,36 @@
       />
     </div>
 
-    <button @click="signOutUser" class="mt-4">
-      <FontAwesomeIcon :icon="['fas', 'sign-out-alt']" class="mr-2" />
-      Paramètres
-    </button>
+    <div v-if="showSettings">
+      <button class="mt-4 flex items-center opacity-60 hover:opacity-100">
+        <Icon icon="ci:settings-filled" class="mr-2" />
+        Paramètres
+      </button>
 
-    <button @click="signOutUser" class="mt-4">
-      <FontAwesomeIcon :icon="['fas', 'sign-out-alt']" class="mr-2" />
-      Se déconnecter
-    </button>
+      <button
+        @click="signOutUser"
+        class="mt-2 flex items-center opacity-60 hover:opacity-100"
+      >
+        <Icon icon="fa-solid:sign-out-alt" class="mr-2" />
+        Se déconnecter
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 import { getAuth, signOut } from 'firebase/auth';
 import { mapState } from 'vuex';
+import { Icon } from '@iconify/vue';
 
 export default {
   name: 'UserInfo',
+  components: {
+    Icon
+  },
+  data: () => ({
+    showSettings: false
+  }),
   computed: {
     ...mapState(['connectedUser'])
   },
@@ -43,7 +58,7 @@ export default {
         });
     },
     defaultProfilePicture(event) {
-      event.target.src = '../assets/images/default-profile-picture.png';
+      event.target.src = require('../assets/images/default-profile-picture.png');
     }
   }
 };

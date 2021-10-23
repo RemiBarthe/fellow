@@ -6,7 +6,7 @@
       <Button
         class="bg-black text-white mb-2"
         @click="googleSignIn"
-        :icon="['fab', 'google']"
+        icon="fa-brands:google"
       >
         Se connecter avec Google
       </Button>
@@ -14,7 +14,7 @@
       <Button
         class="bg-primary text-white"
         @click="facebookSignIn"
-        :icon="['fab', 'facebook']"
+        icon="fa-brands:facebook"
       >
         Se connecter avec Facebook
       </Button>

@@ -4,9 +4,7 @@ import { store } from './store/store';
 import './firebase';
 
 import './assets/css/tailwind.css';
-import FontAwesomeIcon from './utilities/fontawesome-icons';
 
 createApp(App)
-  .component('FontAwesomeIcon', FontAwesomeIcon)
   .use(store)
   .mount('#app');

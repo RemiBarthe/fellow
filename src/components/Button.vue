@@ -1,15 +1,20 @@
 <template>
-  <button class="px-5 py-2.5 rounded">
-    <FontAwesomeIcon v-if="icon" :icon="[icon[0], icon[1]]" class="mr-2" />
+  <button class="px-5 py-2.5 rounded flex items-center">
+    <Icon :icon="icon" class="mr-2" />
     <slot></slot>
   </button>
 </template>
 
 <script>
+import { Icon } from '@iconify/vue';
+
 export default {
   name: 'Button',
   props: {
-    icon: Array
+    icon: String
+  },
+  components: {
+    Icon
   }
 };
 </script>
