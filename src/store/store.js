@@ -1,13 +1,17 @@
 import { createStore } from 'vuex';
 import VuexPersist from 'vuex-persist';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export const SET_CONNECTED_USER = 'SET_CONNECTED_USER';
 export const SET_START_ANIMATION_OVER = 'SET_START_ANIMATION_OVER';
+export const SET_USER_SPACES = 'SET_USER_SPACES';
 
 const vuexPersist = new VuexPersist({
   storage: window.localStorage,
   reducer: (state) => ({
-    connectedUser: state.connectedUser
+    connectedUser: state.connectedUser,
+    spaces: state.spaces
   })
 });
 
@@ -22,6 +26,7 @@ export const store = createStore({
         photoUrl: '',
         uid: ''
       },
+      spaces: {},
       startAnimationOver: false
     };
   },
@@ -31,6 +36,19 @@ export const store = createStore({
     },
     setStartAnimationOver({ commit }, payload) {
       commit(SET_START_ANIMATION_OVER, payload);
+    },
+    setSpaces({ commit }, payload) {
+      onSnapshot(
+        collection(db, 'users', payload, 'spaces'),
+        (querySnapshot) => {
+          const spaces = [];
+          querySnapshot.forEach((doc) => {
+            let id = doc.id;
+            spaces.push({ id, ...doc.data() });
+          });
+          commit(SET_USER_SPACES, spaces);
+        }
+      );
     }
   },
   mutations: {
@@ -44,6 +62,9 @@ export const store = createStore({
     },
     [SET_START_ANIMATION_OVER](state, payload) {
       state.startAnimationOver = payload;
+    },
+    [SET_USER_SPACES](state, payload) {
+      state.spaces = payload;
     }
   },
   plugins: [vuexPersist.plugin]
