@@ -16,5 +16,4 @@ jobs:
           github-token: ${{ github.token }}
           # Coverage threshold. If total coverage is less than threshold, PR will be rejected
           threshold: 80
-          test-script: npm run test:unit
     
