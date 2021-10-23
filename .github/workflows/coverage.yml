@@ -1,0 +1,19 @@
+name: 'coverage'
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  coverage: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Jest coverage report
+        uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.5
+        with:
+          # A github access token
+          github-token: ${{ github.token }}
+          # Coverage threshold. If total coverage is less than threshold, PR will be rejected
+          threshold: 80
+    
