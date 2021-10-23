@@ -17,7 +17,8 @@ export const store = createStore({
       connectedUser: {
         displayName: '',
         email: '',
-        metadata: {},
+        creationTime: '',
+        lastSignInTime: '',
         photoUrl: '',
         uid: ''
       },
@@ -36,7 +37,8 @@ export const store = createStore({
     [SET_CONNECTED_USER](state, payload) {
       state.connectedUser.displayName = payload.displayName;
       state.connectedUser.email = payload.email;
-      state.connectedUser.metadata = payload.metadata;
+      state.connectedUser.creationTime = payload.creationTime;
+      state.connectedUser.lastSignInTime = payload.lastSignInTime;
       state.connectedUser.photoUrl = payload.photoUrl;
       state.connectedUser.uid = payload.uid;
     },

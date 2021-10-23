@@ -10,9 +10,11 @@
 
 <script>
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { mapActions, mapState } from 'vuex';
 import StartAnimation from './containers/StartAnimation.vue';
 import Login from './containers/Login.vue';
+import { db } from './firebase';
 
 export default {
   name: 'App',
@@ -21,7 +23,8 @@ export default {
     StartAnimation
   },
   data: () => ({
-    auth: ''
+    auth: '',
+    tempUser: {}
   }),
   computed: {
     ...mapState(['connectedUser', 'startAnimationOver'])
@@ -31,12 +34,25 @@ export default {
 
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        this.setConnectedUser(user);
+        this.tempUser = {
+          displayName: user.displayName,
+          email: user.email,
+          creationTime: user.metadata.creationTime,
+          lastSignInTime: user.metadata.lastSignInTime,
+          photoUrl: user.photoURL,
+          uid: user.uid
+        };
+
+        const userDb = doc(db, 'users', user.uid);
+        setDoc(userDb, this.tempUser, { merge: true });
+
+        this.setConnectedUser(this.tempUser);
       } else {
         this.setConnectedUser({
           displayName: '',
           email: '',
-          metadata: {},
+          creationTime: '',
+          lastSignInTime: '',
           photoUrl: '',
           uid: ''
         });
