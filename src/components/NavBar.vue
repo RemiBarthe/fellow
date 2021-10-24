@@ -7,31 +7,14 @@
 
     <div class="grid grid-cols-1 mb-12 gap-4 text-gray text-left w-full">
       <button
-        class="nav-item hover:text-black flex items-center w-full text-title md:text-base selected"
-      >
-        <Icon icon="ic:round-dashboard" class="mr-0 md:mr-5" />
-        <p class="hidden md:contents">Dashboard</p>
-      </button>
-
-      <button
+        v-for="(navItem, key) in navList"
+        :key="key"
         class="nav-item hover:text-black flex items-center w-full text-title md:text-base"
+        :class="{ selected: navItem.title === selectedNav }"
+        @click="selectedNav = navItem.title"
       >
-        <Icon icon="fluent:ticket-diagonal-16-filled" class="mr-0 md:mr-5" />
-        <p class="hidden md:contents">Mes tickets</p>
-      </button>
-
-      <button
-        class="nav-item hover:text-black flex items-center w-full text-title md:text-base"
-      >
-        <Icon icon="ion:stats-chart" class="mr-0 md:mr-5" />
-        <p class="hidden md:contents">Statistiques</p>
-      </button>
-
-      <button
-        class="nav-item hover:text-black flex items-center w-full text-title md:text-base"
-      >
-        <Icon icon="ci:settings-filled" class="mr-0 md:mr-5" />
-        <p class="hidden md:contents">Paramètres</p>
+        <Icon :icon="navItem.icon" class="mr-0 md:mr-5" />
+        <p class="hidden md:contents">{{ navItem.title }}</p>
       </button>
     </div>
 
@@ -60,7 +43,15 @@ export default {
     FellowTitle,
     Icon
   },
-  data: () => ({}),
+  data: () => ({
+    navList: [
+      { title: 'Dashboard', icon: 'ic:round-dashboard' },
+      { title: 'Mes tickets', icon: 'fluent:ticket-diagonal-16-filled' },
+      { title: 'Statistiques', icon: 'ion:stats-chart' },
+      { title: 'Paramètres', icon: 'ci:settings-filled' }
+    ],
+    selectedNav: 'Dashboard'
+  }),
   computed: {
     ...mapState(['spaces', 'selectedSpaceId'])
   },
