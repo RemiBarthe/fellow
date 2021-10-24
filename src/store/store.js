@@ -6,12 +6,14 @@ import { db } from '../firebase';
 export const SET_CONNECTED_USER = 'SET_CONNECTED_USER';
 export const SET_START_ANIMATION_OVER = 'SET_START_ANIMATION_OVER';
 export const SET_USER_SPACES = 'SET_USER_SPACES';
+export const SET_SELECTED_SPACE = 'SET_SELECTED_SPACE';
 
 const vuexPersist = new VuexPersist({
   storage: window.localStorage,
   reducer: (state) => ({
     connectedUser: state.connectedUser,
-    spaces: state.spaces
+    spaces: state.spaces,
+    selectedSpaceId: state.selectedSpaceId
   })
 });
 
@@ -27,6 +29,7 @@ export const store = createStore({
         uid: ''
       },
       spaces: {},
+      selectedSpaceId: '',
       startAnimationOver: false
     };
   },
@@ -49,6 +52,9 @@ export const store = createStore({
           commit(SET_USER_SPACES, spaces);
         }
       );
+    },
+    setSelectedSpace({ commit }, payload) {
+      commit(SET_SELECTED_SPACE, payload);
     }
   },
   mutations: {
@@ -65,6 +71,9 @@ export const store = createStore({
     },
     [SET_USER_SPACES](state, payload) {
       state.spaces = payload;
+    },
+    [SET_SELECTED_SPACE](state, payload) {
+      state.selectedSpaceId = payload;
     }
   },
   plugins: [vuexPersist.plugin]

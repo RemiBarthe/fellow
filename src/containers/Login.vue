@@ -4,7 +4,7 @@
       <FellowTitle class="mb-5" />
 
       <Button
-        class="bg-black text-white mb-2"
+        class="bg-black text-white mb-2.5"
         @click="googleSignIn"
         icon="fa-brands:google"
       >
