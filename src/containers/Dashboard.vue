@@ -42,7 +42,7 @@
         <div
           v-for="(space, key) in spaces"
           :key="key"
-          class="p-5 bg-light-gray rounded h-32 w-40 flex items-end cursor-pointer"
+          class="p-5 bg-light-gray rounded h-32 w-36 flex items-end cursor-pointer"
         >
           {{ space.title }}
         </div>
@@ -84,7 +84,7 @@ export default {
     font-weight: 700;
     color: black;
     border-right: 3px solid theme('colors.primary');
-    width: 352px;
+    width: 320px;
     margin-right: -22px;
 
     svg {
