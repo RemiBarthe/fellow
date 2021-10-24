@@ -19,7 +19,6 @@ module.exports = {
 
       black: colors.black,
       white: colors.white,
-      gray: colors.coolGray,
       red: colors.red,
       yellow: colors.amber,
       green: colors.emerald,
@@ -30,7 +29,8 @@ module.exports = {
       primary: '#4062BB',
       secondary: '#59C3C3',
       thirdary: '#F45B69',
-      'light-gray': '#F1F1F1'
+      'light-gray': '#F1F1F1',
+      gray: '#CACACA'
     },
     spacing: {
       px: '1px',

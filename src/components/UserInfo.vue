@@ -14,14 +14,14 @@
     </div>
 
     <div v-if="showSettings">
-      <button class="mt-4 flex items-center opacity-60 hover:opacity-100">
+      <button class="mt-4 flex items-center text-gray hover:text-black">
         <Icon icon="ci:settings-filled" class="mr-2" />
         Paramètres
       </button>
 
       <button
         @click="signOutUser"
-        class="mt-2 flex items-center opacity-60 hover:opacity-100"
+        class="mt-2 flex items-center text-gray hover:text-black"
       >
         <Icon icon="fa-solid:sign-out-alt" class="mr-2" />
         Se déconnecter
