@@ -22,11 +22,18 @@
       <div
         v-for="(space, key) in spaces"
         :key="key"
-        class="p-5 bg-light-gray rounded h-32 w-36 flex items-end cursor-pointer space"
+        class="p-4 bg-light-gray rounded h-32 w-36 flex items-end space cursor-pointer"
         :class="{ selected: space.id === this.selectedSpaceId }"
         @click="selectSpace(space)"
       >
         {{ space.title }}
+      </div>
+
+      <div class="font-bold  rounded">
+        <p class="cursor-pointer rounded p-2">
+          <Icon icon="akar-icons:plus" class="mr-1 text-base-lg float-left " />
+          Créer un <br />espace
+        </p>
       </div>
     </div>
   </nav>
