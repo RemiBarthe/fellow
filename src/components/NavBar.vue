@@ -18,7 +18,9 @@
       </button>
     </div>
 
-    <div class="hidden md:grid grid-cols-2 gap-2.5 text-base text-left">
+    <div
+      class="hidden md:grid grid-cols-2 gap-2.5 text-base text-left select-none"
+    >
       <div
         v-for="(space, key) in spaces"
         :key="key"

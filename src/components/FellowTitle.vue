@@ -1,5 +1,5 @@
 <template>
-  <h1 class="flex font-black justify-center text-title-lg">
+  <h1 class="flex font-black justify-center text-title-lg select-none">
     {{ title }}<span class="text-primary">.</span>
   </h1>
 </template>
