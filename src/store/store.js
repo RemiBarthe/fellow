@@ -7,6 +7,7 @@ export const SET_CONNECTED_USER = 'SET_CONNECTED_USER';
 export const SET_START_ANIMATION_OVER = 'SET_START_ANIMATION_OVER';
 export const SET_USER_SPACES = 'SET_USER_SPACES';
 export const SET_SELECTED_SPACE = 'SET_SELECTED_SPACE';
+export const SET_UNSUBSCRIBE_USER_SPACES = 'SET_UNSUBSCRIBE_USER_SPACES';
 
 const vuexPersist = new VuexPersist({
   storage: window.localStorage,
@@ -30,6 +31,7 @@ export const store = createStore({
       },
       spaces: {},
       selectedSpaceId: '',
+      unsubscribeUserSpaces: null,
       startAnimationOver: false
     };
   },
@@ -41,7 +43,7 @@ export const store = createStore({
       commit(SET_START_ANIMATION_OVER, payload);
     },
     setSpaces({ commit }, payload) {
-      onSnapshot(
+      const unsubscribe = onSnapshot(
         collection(db, 'users', payload, 'spaces'),
         (querySnapshot) => {
           const spaces = [];
@@ -50,6 +52,7 @@ export const store = createStore({
             spaces.push({ id, ...doc.data() });
           });
           commit(SET_USER_SPACES, spaces);
+          commit(SET_UNSUBSCRIBE_USER_SPACES, unsubscribe);
         }
       );
     },
@@ -74,6 +77,9 @@ export const store = createStore({
     },
     [SET_SELECTED_SPACE](state, payload) {
       state.selectedSpaceId = payload;
+    },
+    [SET_UNSUBSCRIBE_USER_SPACES](state, payload) {
+      state.unsubscribeUserSpaces = payload;
     }
   },
   plugins: [vuexPersist.plugin]

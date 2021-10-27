@@ -44,10 +44,12 @@ export default {
     showSettings: false
   }),
   computed: {
-    ...mapState(['connectedUser'])
+    ...mapState(['connectedUser', 'unsubscribeUserSpaces'])
   },
   methods: {
     signOutUser() {
+      this.unsubscribeUserSpaces();
+
       const auth = getAuth();
       signOut(auth)
         .then(() => {
