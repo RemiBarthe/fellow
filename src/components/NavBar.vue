@@ -18,38 +18,21 @@
       </button>
     </div>
 
-    <div
-      class="hidden md:grid grid-cols-2 gap-2.5 text-base text-left select-none"
-    >
-      <div
-        v-for="(space, key) in spaces"
-        :key="key"
-        class="p-4 bg-light-gray rounded h-32 w-36 flex items-end space cursor-pointer"
-        :class="{ selected: space.id === this.selectedSpaceId }"
-        @click="selectSpace(space)"
-      >
-        {{ space.title }}
-      </div>
-
-      <div class="font-bold  rounded">
-        <p class="cursor-pointer rounded p-2">
-          <Icon icon="akar-icons:plus" class="mr-1 text-base-lg float-left " />
-          Créer un <br />espace
-        </p>
-      </div>
-    </div>
+    <SpaceList />
   </nav>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import FellowTitle from './FellowTitle.vue';
+import SpaceList from './SpaceList.vue';
 import { Icon } from '@iconify/vue';
 
 export default {
   name: 'NavBar',
   components: {
     FellowTitle,
+    SpaceList,
     Icon
   },
   data: () => ({
@@ -59,7 +42,9 @@ export default {
       { title: 'Statistiques', icon: 'ion:stats-chart' },
       { title: 'Paramètres', icon: 'ci:settings-filled' }
     ],
-    selectedNav: 'Dashboard'
+    selectedNav: 'Dashboard',
+    showInputNewSpace: false,
+    newSpaceTitle: ''
   }),
   computed: {
     ...mapState(['spaces', 'selectedSpaceId'])
@@ -68,6 +53,21 @@ export default {
     selectSpace(space) {
       space.selected = true;
       this.$store.dispatch('setSelectedSpace', space.id);
+    },
+    createNewSpace() {
+      this.showInputNewSpace = true;
+
+      setTimeout(() => {
+        this.$refs.inputNewSpace.focus();
+      }, 50);
+    },
+    saveNewSpace() {
+      console.log(this.newSpaceTitle.trim());
+      this.closeNewSpace();
+    },
+    closeNewSpace() {
+      this.showInputNewSpace = false;
+      this.newSpaceTitle = '';
     }
   }
 };
