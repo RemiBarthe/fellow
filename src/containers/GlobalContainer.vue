@@ -7,27 +7,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import UserInfo from '../components/UserInfo.vue';
 import NavBar from '../components/NavBar.vue';
 
 export default {
-  name: 'Dashboard',
+  name: 'GlobalContainer',
   components: {
     UserInfo,
     NavBar
   },
-  data: () => ({}),
-  mounted() {
-    this.$store.dispatch('setSpaces', this.connectedUser.uid);
-    // const spacesRef = collection(db, 'users', this.connectedUser.uid, 'spaces');
-    // await addDoc(spacesRef, {
-    //   title: 'RTBF'
-    // });
-  },
-  computed: {
-    ...mapState(['connectedUser'])
-  }
+  data: () => ({})
 };
 </script>
 

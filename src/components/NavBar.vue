@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import FellowTitle from './FellowTitle.vue';
 import SpaceList from './SpaceList.vue';
 import { Icon } from '@iconify/vue';
@@ -42,34 +41,8 @@ export default {
       { title: 'Statistiques', icon: 'ion:stats-chart' },
       { title: 'Paramètres', icon: 'ci:settings-filled' }
     ],
-    selectedNav: 'Dashboard',
-    showInputNewSpace: false,
-    newSpaceTitle: ''
-  }),
-  computed: {
-    ...mapState(['spaces', 'selectedSpaceId'])
-  },
-  methods: {
-    selectSpace(space) {
-      space.selected = true;
-      this.$store.dispatch('setSelectedSpace', space.id);
-    },
-    createNewSpace() {
-      this.showInputNewSpace = true;
-
-      setTimeout(() => {
-        this.$refs.inputNewSpace.focus();
-      }, 50);
-    },
-    saveNewSpace() {
-      console.log(this.newSpaceTitle.trim());
-      this.closeNewSpace();
-    },
-    closeNewSpace() {
-      this.showInputNewSpace = false;
-      this.newSpaceTitle = '';
-    }
-  }
+    selectedNav: 'Dashboard'
+  })
 };
 </script>
 
@@ -91,14 +64,6 @@ export default {
         width: 54px;
       }
     }
-  }
-}
-
-.space {
-  &.selected {
-    background-color: theme('colors.primary');
-    color: white;
-    font-weight: 700;
   }
 }
 </style>

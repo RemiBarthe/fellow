@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { Icon } from '@iconify/vue';
 
 export default {
@@ -63,12 +63,20 @@ export default {
     newSpaceTitle: ''
   }),
   computed: {
-    ...mapState(['spaces', 'selectedSpaceId'])
+    ...mapState(['spaces', 'selectedSpaceId', 'connectedUser'])
+  },
+  mounted() {
+    this.setSpaces(this.connectedUser.uid);
+    // const spacesRef = collection(db, 'users', this.connectedUser.uid, 'spaces');
+    // await addDoc(spacesRef, {
+    //   title: 'RTBF'
+    // });
   },
   methods: {
+    ...mapActions(['setSpaces', 'setSelectedSpace']),
     selectSpace(space) {
       space.selected = true;
-      this.$store.dispatch('setSelectedSpace', space.id);
+      this.setSelectedSpace(space.id);
     },
     createNewSpace() {
       this.showInputNewSpace = true;

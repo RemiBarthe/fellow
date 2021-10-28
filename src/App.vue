@@ -2,9 +2,11 @@
   <div class="font-text text-base font-normal">
     <StartAnimation v-if="!startAnimationOver" />
     <template v-else>
-      <Login v-if="!connectedUser.uid" />
+      <GlobalContainer v-if="connectedUser.uid && selectedSpaceId" />
 
-      <Dashboard v-else />
+      <SpaceList v-else-if="connectedUser.uid" />
+
+      <Login v-else />
     </template>
   </div>
 </template>
@@ -15,7 +17,8 @@ import { doc, setDoc } from 'firebase/firestore';
 import { mapActions, mapState } from 'vuex';
 import StartAnimation from './containers/StartAnimation.vue';
 import Login from './containers/Login.vue';
-import Dashboard from './containers/Dashboard.vue';
+import GlobalContainer from './containers/GlobalContainer.vue';
+import SpaceList from './components/SpaceList.vue';
 import { db } from './firebase';
 
 export default {
@@ -23,13 +26,14 @@ export default {
   components: {
     Login,
     StartAnimation,
-    Dashboard
+    GlobalContainer,
+    SpaceList
   },
   data: () => ({
     tempUser: {}
   }),
   computed: {
-    ...mapState(['connectedUser', 'startAnimationOver'])
+    ...mapState(['connectedUser', 'startAnimationOver', 'selectedSpaceId'])
   },
   created() {
     const auth = getAuth();
@@ -50,19 +54,12 @@ export default {
 
         this.setConnectedUser(this.tempUser);
       } else {
-        this.setConnectedUser({
-          displayName: '',
-          email: '',
-          creationTime: '',
-          lastSignInTime: '',
-          photoUrl: '',
-          uid: ''
-        });
+        this.setStateToDefault();
       }
     });
   },
   methods: {
-    ...mapActions(['setConnectedUser'])
+    ...mapActions(['setConnectedUser', 'setStateToDefault'])
   }
 };
 </script>

@@ -2,12 +2,14 @@ import { createStore } from 'vuex';
 import VuexPersist from 'vuex-persist';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
+import defaultState from './defaultState';
 
 export const SET_CONNECTED_USER = 'SET_CONNECTED_USER';
 export const SET_START_ANIMATION_OVER = 'SET_START_ANIMATION_OVER';
 export const SET_USER_SPACES = 'SET_USER_SPACES';
 export const SET_SELECTED_SPACE = 'SET_SELECTED_SPACE';
 export const SET_UNSUBSCRIBE_USER_SPACES = 'SET_UNSUBSCRIBE_USER_SPACES';
+export const SET_STATE_TO_DEFAULT = 'SET_STATE_TO_DEFAULT';
 
 const vuexPersist = new VuexPersist({
   storage: window.localStorage,
@@ -21,18 +23,7 @@ const vuexPersist = new VuexPersist({
 export const store = createStore({
   state() {
     return {
-      connectedUser: {
-        displayName: '',
-        email: '',
-        creationTime: '',
-        lastSignInTime: '',
-        photoUrl: '',
-        uid: ''
-      },
-      spaces: {},
-      selectedSpaceId: '',
-      unsubscribeUserSpaces: null,
-      startAnimationOver: false
+      ...defaultState
     };
   },
   actions: {
@@ -58,6 +49,9 @@ export const store = createStore({
     },
     setSelectedSpace({ commit }, payload) {
       commit(SET_SELECTED_SPACE, payload);
+    },
+    setStateToDefault({ commit }) {
+      commit(SET_STATE_TO_DEFAULT);
     }
   },
   mutations: {
@@ -80,6 +74,9 @@ export const store = createStore({
     },
     [SET_UNSUBSCRIBE_USER_SPACES](state, payload) {
       state.unsubscribeUserSpaces = payload;
+    },
+    [SET_STATE_TO_DEFAULT](state) {
+      Object.assign(state, defaultState);
     }
   },
   plugins: [vuexPersist.plugin]
