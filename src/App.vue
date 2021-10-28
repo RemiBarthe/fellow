@@ -4,7 +4,7 @@
     <template v-else>
       <GlobalContainer v-if="connectedUser.uid && selectedSpaceId" />
 
-      <SpaceList v-else-if="connectedUser.uid" />
+      <ChooseSpace v-else-if="connectedUser.uid" />
 
       <Login v-else />
     </template>
@@ -18,7 +18,7 @@ import { mapActions, mapState } from 'vuex';
 import StartAnimation from './containers/StartAnimation.vue';
 import Login from './containers/Login.vue';
 import GlobalContainer from './containers/GlobalContainer.vue';
-import SpaceList from './components/SpaceList.vue';
+import ChooseSpace from './containers/ChooseSpace.vue';
 import { db } from './firebase';
 
 export default {
@@ -27,7 +27,7 @@ export default {
     Login,
     StartAnimation,
     GlobalContainer,
-    SpaceList
+    ChooseSpace
   },
   data: () => ({
     tempUser: {}

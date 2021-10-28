@@ -1,6 +1,7 @@
 <template>
   <div
-    class="hidden md:grid grid-cols-2 gap-2.5 text-base text-left select-none"
+    class="grid-cols-2 gap-2.5 text-base text-left select-none"
+    :class="hiddenSmScreen ? 'hidden md:grid' : 'grid'"
   >
     <div
       v-for="(space, key) in spaces"
@@ -57,6 +58,9 @@ export default {
   name: 'SpaceList',
   components: {
     Icon
+  },
+  props: {
+    hiddenSmScreen: Boolean
   },
   data: () => ({
     showInputNewSpace: false,

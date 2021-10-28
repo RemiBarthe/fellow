@@ -18,7 +18,7 @@
       </button>
     </div>
 
-    <SpaceList />
+    <SpaceList :hiddenSmScreen="true" />
   </nav>
 </template>
 
