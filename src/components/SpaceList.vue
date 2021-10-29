@@ -53,6 +53,8 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { Icon } from '@iconify/vue';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default {
   name: 'SpaceList',
@@ -71,10 +73,6 @@ export default {
   },
   mounted() {
     this.setSpaces(this.connectedUser.uid);
-    // const spacesRef = collection(db, 'users', this.connectedUser.uid, 'spaces');
-    // await addDoc(spacesRef, {
-    //   title: 'RTBF'
-    // });
   },
   methods: {
     ...mapActions(['setSpaces', 'setSelectedSpace']),
@@ -89,8 +87,16 @@ export default {
         this.$refs.inputNewSpace.focus();
       }, 50);
     },
-    saveNewSpace() {
-      console.log(this.newSpaceTitle.trim());
+    async saveNewSpace() {
+      const spacesRef = collection(
+        db,
+        'users',
+        this.connectedUser.uid,
+        'spaces'
+      );
+      await addDoc(spacesRef, {
+        title: this.newSpaceTitle.trim()
+      });
       this.closeNewSpace();
     },
     closeNewSpace() {
