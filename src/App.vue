@@ -64,4 +64,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+</style>

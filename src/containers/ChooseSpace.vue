@@ -3,7 +3,7 @@
     <FellowTitle class="mb-15 md:inline absolute" />
 
     <div class="m-auto">
-      <SpaceList :hiddenSmScreen="false" />
+      <SpaceList />
     </div>
   </section>
 </template>

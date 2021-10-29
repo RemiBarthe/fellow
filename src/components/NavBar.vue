@@ -18,13 +18,26 @@
       </button>
     </div>
 
-    <SpaceList :hiddenSmScreen="true" />
+    <SpaceList class="hidden md:grid" />
+
+    <div
+      class="text-title rounded block md:hidden"
+      @click="showSpacesModal = true"
+    >
+      <Icon icon="heroicons-outline:switch-horizontal" />
+    </div>
+
+    <Modal v-if="showSpacesModal" @closeModal="showSpacesModal = false">
+      <h2 class="text-title font-bold mb-5">Mes espaces</h2>
+      <SpaceList />
+    </Modal>
   </nav>
 </template>
 
 <script>
 import FellowTitle from './FellowTitle.vue';
 import SpaceList from './SpaceList.vue';
+import Modal from './Modal.vue';
 import { Icon } from '@iconify/vue';
 
 export default {
@@ -32,6 +45,7 @@ export default {
   components: {
     FellowTitle,
     SpaceList,
+    Modal,
     Icon
   },
   data: () => ({
@@ -41,7 +55,8 @@ export default {
       { title: 'Statistiques', icon: 'ion:stats-chart' },
       { title: 'Paramètres', icon: 'ci:settings-filled' }
     ],
-    selectedNav: 'Dashboard'
+    selectedNav: 'Dashboard',
+    showSpacesModal: false
   })
 };
 </script>

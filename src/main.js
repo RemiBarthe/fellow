@@ -4,7 +4,7 @@ import { store } from './store/store';
 import './firebase';
 
 import './assets/css/tailwind.css';
-import './registerServiceWorker'
+import './registerServiceWorker';
 
 createApp(App)
   .use(store)

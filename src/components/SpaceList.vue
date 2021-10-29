@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="grid-cols-2 gap-2.5 text-base text-left select-none"
-    :class="hiddenSmScreen ? 'hidden md:grid' : 'grid'"
-  >
+  <div class="grid grid-cols-2 gap-2.5 text-base text-left select-none">
     <div
       v-for="(space, key) in spaces"
       :key="key"
@@ -61,9 +58,6 @@ export default {
   components: {
     Icon
   },
-  props: {
-    hiddenSmScreen: Boolean
-  },
   data: () => ({
     showInputNewSpace: false,
     newSpaceTitle: ''
@@ -88,6 +82,9 @@ export default {
       }, 50);
     },
     async saveNewSpace() {
+      const spaceTitle = this.newSpaceTitle.trim();
+      this.closeNewSpace();
+
       const spacesRef = collection(
         db,
         'users',
@@ -95,9 +92,8 @@ export default {
         'spaces'
       );
       await addDoc(spacesRef, {
-        title: this.newSpaceTitle.trim()
+        title: spaceTitle
       });
-      this.closeNewSpace();
     },
     closeNewSpace() {
       this.showInputNewSpace = false;
