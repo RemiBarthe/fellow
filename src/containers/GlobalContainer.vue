@@ -4,21 +4,21 @@
 
     <NavBar />
 
-    <Dashboard />
+    <div class="p-5 pt-20 w-full">
+      <router-view />
+    </div>
   </section>
 </template>
 
 <script>
 import UserInfo from '../components/UserInfo.vue';
 import NavBar from '../components/NavBar.vue';
-import Dashboard from './Dashboard.vue';
 
 export default {
   name: 'GlobalContainer',
   components: {
     UserInfo,
-    NavBar,
-    Dashboard
+    NavBar
   },
   data: () => ({})
 };
