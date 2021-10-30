@@ -8,7 +8,7 @@ export default {
     uid: ''
   },
   spaces: {},
-  selectedSpaceId: '',
+  selectedSpace: '',
   unsubscribeUserSpaces: null,
   startAnimationOver: false
 };

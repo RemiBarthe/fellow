@@ -1,20 +1,24 @@
 <template>
-  <section class="flex h-screen bg-light-gray">
+  <section class="flex min-h-screen bg-light-gray">
     <UserInfo class="fixed right-5 top-5" />
 
     <NavBar />
+
+    <Dashboard />
   </section>
 </template>
 
 <script>
 import UserInfo from '../components/UserInfo.vue';
 import NavBar from '../components/NavBar.vue';
+import Dashboard from './Dashboard.vue';
 
 export default {
   name: 'GlobalContainer',
   components: {
     UserInfo,
-    NavBar
+    NavBar,
+    Dashboard
   },
   data: () => ({})
 };

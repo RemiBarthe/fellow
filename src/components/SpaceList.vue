@@ -4,7 +4,7 @@
       v-for="(space, key) in spaces"
       :key="key"
       class="p-4 bg-light-gray rounded h-32 w-36 flex items-end space cursor-pointer"
-      :class="{ selected: space.id === this.selectedSpaceId }"
+      :class="{ selected: space.id === this.selectedSpace.id }"
       @click="selectSpace(space)"
     >
       {{ space.title }}
@@ -63,7 +63,7 @@ export default {
     newSpaceTitle: ''
   }),
   computed: {
-    ...mapState(['spaces', 'selectedSpaceId', 'connectedUser'])
+    ...mapState(['spaces', 'selectedSpace', 'connectedUser'])
   },
   mounted() {
     this.setSpaces(this.connectedUser.uid);
@@ -71,8 +71,7 @@ export default {
   methods: {
     ...mapActions(['setSpaces', 'setSelectedSpace']),
     selectSpace(space) {
-      space.selected = true;
-      this.setSelectedSpace(space.id);
+      this.setSelectedSpace(space);
     },
     createNewSpace() {
       this.showInputNewSpace = true;

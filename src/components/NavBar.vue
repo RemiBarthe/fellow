@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="h-screen bg-white p-5 flex flex-col items-start border-r-2 border-gray"
+    class="min-h-screen bg-white p-5 flex flex-col flex-shrink-0 items-start border-r-2 border-gray"
   >
     <FellowTitle class="mb-15 hidden md:inline" />
     <FellowTitle class="mb-15 inline md:hidden" :short="true" />
@@ -18,7 +18,7 @@
       </button>
     </div>
 
-    <SpaceList class="hidden md:grid" />
+    <SpaceList class="hidden md:grid mb-10" />
 
     <div
       class="text-title rounded block md:hidden"

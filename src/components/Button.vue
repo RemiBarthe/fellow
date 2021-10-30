@@ -1,5 +1,5 @@
 <template>
-  <button class="px-5 py-2.5 rounded flex items-center select-none">
+  <button class="px-6 py-2.5 rounded flex items-center select-none">
     <Icon v-if="icon" :icon="icon" class="mr-2" />
     <slot></slot>
   </button>

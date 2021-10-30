@@ -5,7 +5,7 @@
     @click.self="showSettings = !showSettings"
   >
     <div class="flex items-center" @click="showSettings = !showSettings">
-      <p class="mr-2.5">{{ connectedUser.displayName }}</p>
+      <p class="mr-2.5 hidden md:inline">{{ connectedUser.displayName }}</p>
       <img
         :alt="`${connectedUser.displayName} profile picture`"
         @error="defaultProfilePicture"

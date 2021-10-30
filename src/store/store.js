@@ -16,7 +16,7 @@ const vuexPersist = new VuexPersist({
   reducer: (state) => ({
     connectedUser: state.connectedUser,
     spaces: state.spaces,
-    selectedSpaceId: state.selectedSpaceId
+    selectedSpace: state.selectedSpace
   })
 });
 
@@ -70,7 +70,7 @@ export const store = createStore({
       state.spaces = payload;
     },
     [SET_SELECTED_SPACE](state, payload) {
-      state.selectedSpaceId = payload;
+      state.selectedSpace = payload;
     },
     [SET_UNSUBSCRIBE_USER_SPACES](state, payload) {
       state.unsubscribeUserSpaces = payload;

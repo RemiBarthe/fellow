@@ -2,7 +2,7 @@
   <div class="font-text text-base font-normal">
     <StartAnimation v-if="!startAnimationOver" />
     <template v-else>
-      <GlobalContainer v-if="connectedUser.uid && selectedSpaceId" />
+      <GlobalContainer v-if="connectedUser.uid && selectedSpace.id" />
 
       <ChooseSpace v-else-if="connectedUser.uid" />
 
@@ -33,7 +33,7 @@ export default {
     tempUser: {}
   }),
   computed: {
-    ...mapState(['connectedUser', 'startAnimationOver', 'selectedSpaceId'])
+    ...mapState(['connectedUser', 'startAnimationOver', 'selectedSpace'])
   },
   created() {
     const auth = getAuth();
