@@ -18,7 +18,7 @@
       <Button class="bg-black text-white mx-auto">Créer un ticket</Button>
     </div>
 
-    <div class="flex items-start justify-end">
+    <div class="flex items-start justify-center lg:justify-end">
       <Button class="bg-black text-white">Voir tous les tickets</Button>
     </div>
 
