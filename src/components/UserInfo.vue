@@ -2,6 +2,7 @@
   <div
     class="flex flex-col items-start p-5 rounded hover:bg-white cursor-pointer"
     :class="{ 'bg-white': showSettings }"
+    @click.self="showSettings = !showSettings"
   >
     <div class="flex items-center" @click="showSettings = !showSettings">
       <p class="mr-2.5">{{ connectedUser.displayName }}</p>
