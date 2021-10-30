@@ -9,5 +9,10 @@ module.exports = {
   rules: {
     // override/add rules settings here, such as:
     // 'vue/no-unused-vars': 'error'
+    'vue/object-curly-spacing': ['error', 'always'],
+    'vue/template-curly-spacing': ['error', 'never'],
+    'vue/space-in-parens': ['error', 'never'],
+    'vue/space-infix-ops': ['error', { 'int32Hint': true }],
+    'semi': ['error', 'always', { 'omitLastInOneLineBlock': true}]
   }
 };

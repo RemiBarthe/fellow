@@ -4,29 +4,9 @@
   </h2>
 
   <div class="grid gap-5 grid-flow-row lg:grid-flow-col">
-    <div class="bg-white p-5 rounded flex flex-col justify-between">
-      <p class="font-bold pb-2">
-        Tickets en cours
-      </p>
-      <p class="text-gray text-center pb-2">
-        Vous n’avez aucun ticket en cours
-      </p>
-      <Button class="bg-black text-white mx-auto">
-        Créer un ticket
-      </Button>
-    </div>
+    <TicketCardList status="en cours" />
 
-    <div class="bg-white p-5 rounded flex flex-col justify-between">
-      <p class="font-bold pb-2">
-        Tickets à faire
-      </p>
-      <p class="text-gray text-center pb-2">
-        Vous n’avez aucun ticket à faire
-      </p>
-      <Button class="bg-black text-white mx-auto">
-        Créer un ticket
-      </Button>
-    </div>
+    <TicketCardList status="à faire" />
 
     <div class="flex items-start justify-center lg:justify-end">
       <Button class="bg-black text-white">
@@ -62,11 +42,13 @@
 <script>
 import { mapState } from 'vuex';
 import Button from '../components/Button.vue';
+import TicketCardList from '../components/TicketCardList.vue';
 
 export default {
   name: 'Dashboard',
   components: {
-    Button
+    Button,
+    TicketCardList
   },
   data: () => ({}),
   computed: {
