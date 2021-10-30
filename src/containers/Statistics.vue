@@ -1,5 +1,7 @@
 <template>
-  <h2 class="font-bold text-title mb-8">Statistiques</h2>
+  <h2 class="font-bold text-title mb-8">
+    Statistiques
+  </h2>
 </template>
 
 <script>

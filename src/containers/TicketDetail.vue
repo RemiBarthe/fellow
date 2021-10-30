@@ -1,5 +1,7 @@
 <template>
-  <h2 class="font-bold text-title mb-8">Détail d'un ticket</h2>
+  <h2 class="font-bold text-title mb-8">
+    Détail d'un ticket
+  </h2>
 </template>
 
 <script>

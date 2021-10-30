@@ -4,27 +4,38 @@
     :class="{ 'bg-white': showSettings }"
     @click.self="showSettings = !showSettings"
   >
-    <div class="flex items-center" @click="showSettings = !showSettings">
-      <p class="mr-2.5 hidden md:inline">{{ connectedUser.displayName }}</p>
+    <div
+      class="flex items-center"
+      @click="showSettings = !showSettings"
+    >
+      <p class="mr-2.5 hidden md:inline">
+        {{ connectedUser.displayName }}
+      </p>
       <img
         :alt="`${connectedUser.displayName} profile picture`"
-        @error="defaultProfilePicture"
         :src="connectedUser.photoUrl"
         class="w-10 h-10 rounded-full"
-      />
+        @error="defaultProfilePicture"
+      >
     </div>
 
     <div v-if="showSettings">
       <button class="mt-4 flex items-center text-gray hover:text-black">
-        <Icon icon="ci:settings-filled" class="mr-2" />
+        <Icon
+          icon="ci:settings-filled"
+          class="mr-2"
+        />
         Paramètres
       </button>
 
       <button
-        @click="signOutUser"
         class="mt-2 flex items-center text-gray hover:text-black"
+        @click="signOutUser"
       >
-        <Icon icon="fa-solid:sign-out-alt" class="mr-2" />
+        <Icon
+          icon="fa-solid:sign-out-alt"
+          class="mr-2"
+        />
         Se déconnecter
       </button>
     </div>

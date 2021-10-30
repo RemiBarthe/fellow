@@ -4,7 +4,7 @@
     @click.self="closeModal"
   >
     <div class="m-auto max-h-full bg-white rounded p-5 pb-15 overflow-y-auto">
-      <slot></slot>
+      <slot />
     </div>
   </div>
 </template>
@@ -12,6 +12,7 @@
 <script>
 export default {
   name: 'Modal',
+  emits: ['closeModal'],
   data: () => ({}),
   methods: {
     closeModal() {
