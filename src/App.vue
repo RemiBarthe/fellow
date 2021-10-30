@@ -1,61 +1,73 @@
 <template>
-  <StartAnimation v-if="!startAnimationOver" />
-  <template v-else>
-    <Login v-if="!connectedUser.uid" />
-    <button v-else @click="signOutUser">
-      Sign Out {{ connectedUser.displayName }}
-    </button>
-  </template>
+  <div class="font-text text-base font-normal">
+    <StartAnimation v-if="!startAnimationOver" />
+    <template v-else>
+      <GlobalContainer v-if="connectedUser.uid && selectedSpaceId" />
+
+      <ChooseSpace v-else-if="connectedUser.uid" />
+
+      <Login v-else />
+    </template>
+  </div>
 </template>
 
 <script>
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { mapActions, mapState } from 'vuex';
 import StartAnimation from './containers/StartAnimation.vue';
 import Login from './containers/Login.vue';
+import GlobalContainer from './containers/GlobalContainer.vue';
+import ChooseSpace from './containers/ChooseSpace.vue';
+import { db } from './firebase';
 
 export default {
   name: 'App',
   components: {
     Login,
-    StartAnimation
+    StartAnimation,
+    GlobalContainer,
+    ChooseSpace
   },
   data: () => ({
-    auth: ''
+    tempUser: {}
   }),
   computed: {
-    ...mapState(['connectedUser', 'startAnimationOver'])
+    ...mapState(['connectedUser', 'startAnimationOver', 'selectedSpaceId'])
   },
   created() {
-    this.auth = getAuth();
+    const auth = getAuth();
 
-    onAuthStateChanged(this.auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
-        this.setConnectedUser(user);
+        this.tempUser = {
+          displayName: user.displayName,
+          email: user.email,
+          creationTime: user.metadata.creationTime,
+          lastSignInTime: user.metadata.lastSignInTime,
+          photoUrl: user.photoURL,
+          uid: user.uid
+        };
+
+        const userDb = doc(db, 'users', user.uid);
+        setDoc(userDb, this.tempUser, { merge: true });
+
+        this.setConnectedUser(this.tempUser);
       } else {
-        this.setConnectedUser({
-          displayName: '',
-          email: '',
-          metadata: {},
-          photoUrl: '',
-          uid: ''
-        });
+        this.setStateToDefault();
       }
     });
   },
   methods: {
-    ...mapActions(['setConnectedUser']),
-    signOutUser() {
-      signOut(this.auth)
-        .then(() => {
-          // Sign-out successful.
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    ...mapActions(['setConnectedUser', 'setStateToDefault'])
   }
 };
 </script>
 
-<style></style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+</style>

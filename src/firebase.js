@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 import { getAnalytics, isSupported } from 'firebase/analytics';
 import { GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 
@@ -15,14 +16,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 let analytics;
+let db;
 let googleAuthProvider;
 let facebookAuthProvider;
 
 isSupported().then((isSupported) => {
   if (isSupported) {
     analytics = getAnalytics(app);
+    db = getFirestore();
     googleAuthProvider = new GoogleAuthProvider();
     facebookAuthProvider = new FacebookAuthProvider();
   }
 });
-export { analytics, googleAuthProvider, facebookAuthProvider };
+export { analytics, db, googleAuthProvider, facebookAuthProvider };

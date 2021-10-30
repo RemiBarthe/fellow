@@ -1,16 +1,22 @@
 <template>
   <section class="flex h-screen bg-light-gray">
     <div class="m-auto flex flex-col bg-white p-5 rounded">
-      <FellowTitle class="text-title-lg mb-4 md:mb-5" />
+      <FellowTitle class="mb-5" />
 
-      <Button class="bg-black text-white mb-2 md:mb-2.5" @click="googleSignIn">
-        <FontAwesomeIcon :icon="['fab', 'google']" class="mr-2" />Se connecter
-        avec Google
+      <Button
+        class="bg-black text-white mb-2.5 hover:bg-opacity-90"
+        @click="googleSignIn"
+        icon="fa-brands:google"
+      >
+        Se connecter avec Google
       </Button>
 
-      <Button class="bg-primary text-white" @click="facebookSignIn">
-        <FontAwesomeIcon :icon="['fab', 'facebook']" class="mr-2" />Se connecter
-        avec Facebook
+      <Button
+        class="bg-primary text-white hover:bg-opacity-90"
+        @click="facebookSignIn"
+        icon="fa-brands:facebook"
+      >
+        Se connecter avec Facebook
       </Button>
     </div>
   </section>

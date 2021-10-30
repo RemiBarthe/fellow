@@ -1,14 +1,21 @@
 <template>
-  <button
-    class="px-5 py-2.5 rounded font-text font-normal text-base md:text-base-lg"
-  >
+  <button class="px-5 py-2.5 rounded flex items-center select-none">
+    <Icon v-if="icon" :icon="icon" class="mr-2" />
     <slot></slot>
   </button>
 </template>
 
 <script>
+import { Icon } from '@iconify/vue';
+
 export default {
-  name: 'Button'
+  name: 'Button',
+  props: {
+    icon: String
+  },
+  components: {
+    Icon
+  }
 };
 </script>
 

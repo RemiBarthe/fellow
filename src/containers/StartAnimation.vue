@@ -1,7 +1,7 @@
 <template>
   <section class="flex h-screen">
     <div class="m-auto">
-      <h1 class="font-black text-title-max font-text flex">
+      <h1 class="font-black text-title-max font-text flex select-none">
         {{ animatedTitle }}
         <span class="text-primary">.</span>
       </h1>

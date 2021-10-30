@@ -19,7 +19,6 @@ module.exports = {
 
       black: colors.black,
       white: colors.white,
-      gray: colors.coolGray,
       red: colors.red,
       yellow: colors.amber,
       green: colors.emerald,
@@ -30,7 +29,8 @@ module.exports = {
       primary: '#4062BB',
       secondary: '#59C3C3',
       thirdary: '#F45B69',
-      'light-gray': '#F1F1F1'
+      'light-gray': '#F1F1F1',
+      gray: '#CACACA'
     },
     spacing: {
       px: '1px',
@@ -52,6 +52,7 @@ module.exports = {
       11: '2.75rem',
       12: '3rem',
       14: '3.5rem',
+      15: '3.75rem',
       16: '4rem',
       20: '5rem',
       24: '6rem',
@@ -246,6 +247,8 @@ module.exports = {
       1: '1 1 0%',
       auto: '1 1 auto',
       initial: '0 1 auto',
+      33: '0 0 33.333%',
+      50: '0 0 50%',
       none: 'none'
     },
     flexGrow: {
