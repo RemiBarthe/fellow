@@ -4,7 +4,7 @@
       <FellowTitle class="mb-5" />
 
       <Button
-        class="bg-black text-white mb-2.5"
+        class="bg-black text-white mb-2.5 hover:bg-opacity-90"
         @click="googleSignIn"
         icon="fa-brands:google"
       >
@@ -12,7 +12,7 @@
       </Button>
 
       <Button
-        class="bg-primary text-white"
+        class="bg-primary text-white hover:bg-opacity-90"
         @click="facebookSignIn"
         icon="fa-brands:facebook"
       >
