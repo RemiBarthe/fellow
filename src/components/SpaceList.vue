@@ -108,7 +108,8 @@ export default {
         'spaces'
       );
       await addDoc(spacesRef, {
-        title: spaceTitle
+        title: spaceTitle,
+        ticketsNumber: 0
       });
     },
     closeNewSpace() {

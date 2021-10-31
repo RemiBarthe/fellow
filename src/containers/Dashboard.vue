@@ -9,7 +9,10 @@
     <TicketCardList status="à faire" />
 
     <div class="flex items-start justify-center lg:justify-end">
-      <Button class="bg-black text-white">
+      <Button
+        class="bg-black text-white"
+        @click="$router.push('/tickets')"
+      >
         Voir tous les tickets
       </Button>
     </div>

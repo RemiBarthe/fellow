@@ -3,15 +3,34 @@
     <p class="font-bold pb-2">
       Tickets {{ status }}
     </p>
-    <p class="text-gray text-center pb-2">
-      Vous n’avez aucun ticket {{ status }}
-    </p>
-    <Button
-      class="bg-black text-white mx-auto"
-      @click="createNewTicket()"
+
+    <div
+      v-if="tickets.length"
+      class="grid grid-cols-1"
     >
-      Créer un ticket
-    </Button>
+      <div
+        v-for="(ticket, key) in tickets"
+        :key="key"
+        class="cursor-pointer"
+        @click="$router.push(`/tickets/${ticket.slug}`)"
+      >
+        <span class="bg-primary text-white px-2.5 py-1 rounded font-bold text-sm">{{ ticket.slug }}</span> 
+        {{ ticket.title }}
+      </div>
+    </div>
+
+    <template v-else>
+      <p class="text-gray text-center pb-2">
+        Vous n’avez aucun ticket {{ status }}
+      </p>
+
+      <Button
+        class="bg-black text-white mx-auto"
+        @click="createNewTicket()"
+      >
+        Créer un ticket
+      </Button>
+    </template>
   </div>
 </template>
 
@@ -34,14 +53,14 @@ export default {
   },
   data: () => ({}),
   computed: {
-    ...mapState(['connectedUser', 'selectedSpace', 'spaces'])
+    ...mapState(['connectedUser', 'selectedSpace', 'spaces', 'tickets'])
   },
   methods: {
     ...mapActions(['setSelectedSpace']),
     async createNewTicket() {
       await this.updateTicketsNumber();
 
-      const formattedTitle = this.selectedSpace.title.replace(/\s/g, "").toLowerCase();
+      const formattedTitle = this.selectedSpace.title.replace(/\s/g, "").toLowerCase().substring(0, 4);
       const slug = `${formattedTitle}-${this.selectedSpace.ticketsNumber}`;
       await this.saveNewTicket(slug);
 
