@@ -22,7 +22,7 @@ const routes = [
     component: TicketList
   },
   {
-    path: '/tickets/:id',
+    path: '/tickets/:slug',
     name: 'Ticket Detail',
     component: TicketDetail
   },

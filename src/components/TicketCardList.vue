@@ -6,12 +6,12 @@
 
     <div
       v-if="tickets.length"
-      class="grid grid-cols-1"
+      class="grid grid-cols-1 gap-2 h-full auto-rows-max"
     >
       <div
         v-for="(ticket, key) in tickets"
         :key="key"
-        class="cursor-pointer"
+        class="cursor-pointer truncate"
         @click="$router.push(`/tickets/${ticket.slug}`)"
       >
         <span class="bg-primary text-white px-2.5 py-1 rounded font-bold text-sm">{{ ticket.slug }}</span> 

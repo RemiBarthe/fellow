@@ -10,7 +10,7 @@
 
     <div class="flex items-start justify-center lg:justify-end">
       <Button
-        class="bg-black text-white"
+        class="bg-black text-white border-2 border-black hover:border-secondary"
         @click="$router.push('/tickets')"
       >
         Voir tous les tickets

@@ -86,7 +86,9 @@ export default {
   methods: {
     ...mapActions(['setSpaces', 'setSelectedSpace', 'setTickets']),
     selectSpace(space) {
-      this.unsubscribeTickets();
+      if(this.unsubscribeTickets){
+        this.unsubscribeTickets();
+      }
       this.setSelectedSpace(space);
       this.setTickets({ userId: this.connectedUser.uid, spaceId: space.id });
     },
