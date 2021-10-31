@@ -9,6 +9,8 @@ export const SET_START_ANIMATION_OVER = 'SET_START_ANIMATION_OVER';
 export const SET_USER_SPACES = 'SET_USER_SPACES';
 export const SET_SELECTED_SPACE = 'SET_SELECTED_SPACE';
 export const SET_UNSUBSCRIBE_USER_SPACES = 'SET_UNSUBSCRIBE_USER_SPACES';
+export const SET_TICKETS = 'SET_TICKETS';
+export const SET_UNSUBSCRIBE_TICKETS = 'SET_UNSUBSCRIBE_TICKETS';
 export const SET_STATE_TO_DEFAULT = 'SET_STATE_TO_DEFAULT';
 
 const vuexPersist = new VuexPersist({
@@ -16,7 +18,8 @@ const vuexPersist = new VuexPersist({
   reducer: (state) => ({
     connectedUser: state.connectedUser,
     spaces: state.spaces,
-    selectedSpace: state.selectedSpace
+    selectedSpace: state.selectedSpace,
+    tickets: state.tickets
   })
 });
 
@@ -50,6 +53,20 @@ export const store = createStore({
     setSelectedSpace({ commit }, payload) {
       commit(SET_SELECTED_SPACE, payload);
     },
+    setTickets({ commit }, payload) {
+      const unsubscribe = onSnapshot(
+        collection(db, 'users', payload.userId, 'spaces', payload.spaceId, 'tickets'),
+        (querySnapshot) => {
+          const tickets = [];
+          querySnapshot.forEach((doc) => {
+            let id = doc.id;
+            tickets.push({ id, ...doc.data() });
+          });
+          commit(SET_TICKETS, tickets);
+          commit(SET_UNSUBSCRIBE_TICKETS, unsubscribe);
+        }
+      );
+    },
     setStateToDefault({ commit }) {
       commit(SET_STATE_TO_DEFAULT);
     }
@@ -74,6 +91,12 @@ export const store = createStore({
     },
     [SET_UNSUBSCRIBE_USER_SPACES](state, payload) {
       state.unsubscribeUserSpaces = payload;
+    },
+    [SET_TICKETS](state, payload){
+      state.tickets = payload;
+    },
+    [SET_UNSUBSCRIBE_TICKETS](state, payload) {
+      state.unsubscribeTickets = payload;
     },
     [SET_STATE_TO_DEFAULT](state) {
       Object.assign(state, defaultState);

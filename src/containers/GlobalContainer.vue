@@ -13,6 +13,7 @@
 <script>
 import UserInfo from '../components/UserInfo.vue';
 import NavBar from '../components/NavBar.vue';
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: 'GlobalContainer',
@@ -20,7 +21,16 @@ export default {
     UserInfo,
     NavBar
   },
-  data: () => ({})
+  data: () => ({}),
+  computed: {
+    ...mapState(['connectedUser', 'selectedSpace'])
+  },
+  mounted() {
+    this.setTickets({ userId: this.connectedUser.uid, spaceId: this.selectedSpace.id });
+  },
+  methods: {
+    ...mapActions(['setTickets']),
+  }
 };
 </script>
 

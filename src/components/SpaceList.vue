@@ -78,15 +78,17 @@ export default {
     newSpaceTitle: ''
   }),
   computed: {
-    ...mapState(['spaces', 'selectedSpace', 'connectedUser'])
+    ...mapState(['spaces', 'selectedSpace', 'connectedUser', 'unsubscribeTickets'])
   },
   mounted() {
     this.setSpaces(this.connectedUser.uid);
   },
   methods: {
-    ...mapActions(['setSpaces', 'setSelectedSpace']),
+    ...mapActions(['setSpaces', 'setSelectedSpace', 'setTickets']),
     selectSpace(space) {
+      this.unsubscribeTickets();
       this.setSelectedSpace(space);
+      this.setTickets({ userId: this.connectedUser.uid, spaceId: space.id });
     },
     createNewSpace() {
       this.showInputNewSpace = true;

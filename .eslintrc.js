@@ -8,11 +8,14 @@ module.exports = {
   ],
   rules: {
     // override/add rules settings here, such as:
-    // 'vue/no-unused-vars': 'error'
-    'vue/object-curly-spacing': ['error', 'always'],
-    'vue/template-curly-spacing': ['error', 'never'],
-    'vue/space-in-parens': ['error', 'never'],
-    'vue/space-infix-ops': ['error', { 'int32Hint': true }],
-    'semi': ['error', 'always', { 'omitLastInOneLineBlock': true}]
+    'vue/no-unused-vars': 'error',
+    'object-curly-spacing': ['error', 'always'],
+    'template-curly-spacing': ['error', 'never'],
+    'space-in-parens': ['error', 'never'],
+    'space-infix-ops': ['error', { 'int32Hint': true }],
+    'semi': ['error', 'always', { 'omitLastInOneLineBlock': true }],
+    'comma-spacing': ['error', { 'before': false, 'after': true }],
+    'indent': ['error', 2],
+    'key-spacing': ['error', { 'afterColon': true, 'beforeColon': false }]
   }
 };
