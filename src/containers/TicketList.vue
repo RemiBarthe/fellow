@@ -2,6 +2,15 @@
   <h2 class="font-bold text-title mb-8">
     {{ selectedSpace.title }}
   </h2>
+
+  <div>
+    <div
+      v-for="(ticket, key) in tickets"
+      :key="key"
+    >
+      {{ ticket }}
+    </div>
+  </div>
 </template>
 
 <script>
@@ -12,7 +21,7 @@ export default {
   components: {},
   data: () => ({}),
   computed: {
-    ...mapState(['selectedSpace'])
+    ...mapState(['selectedSpace', 'tickets'])
   }
 };
 </script>

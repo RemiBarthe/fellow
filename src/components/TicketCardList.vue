@@ -25,7 +25,7 @@
       </p>
 
       <Button
-        class="bg-black text-white mx-auto"
+        class="bg-black text-white mx-auto hover:bg-opacity-85"
         @click="createNewTicket()"
       >
         Créer un ticket
@@ -60,7 +60,7 @@ export default {
     async createNewTicket() {
       await this.updateTicketsNumber();
 
-      const formattedTitle = this.selectedSpace.title.replace(/\s/g, "").toLowerCase().substring(0, 4);
+      const formattedTitle = this.selectedSpace.title.replace(/\s/g, "").toUpperCase().substring(0, 4);
       const slug = `${formattedTitle}-${this.selectedSpace.ticketsNumber}`;
       await this.saveNewTicket(slug);
 
@@ -89,7 +89,7 @@ export default {
         'tickets',
         slug
       );
-      return setDoc(ticketsRef, { slug, title: `Titre temporaire ${slug}` }, { merge: true });
+      return setDoc(ticketsRef, { slug, title: `Titre temporaire ${slug}`, creationDate: new Date() }, { merge: true });
     }
   }
 };

@@ -3,7 +3,7 @@
     <span class="bg-primary text-white px-2.5 py-1 rounded font-bold text-base">
       {{ $route.params.slug }} 
     </span>
-    {{ currentTicket.title }}
+    {{ currentTicket?.title }}
   </h2>
 
   <QuillEditor
@@ -24,13 +24,24 @@ export default {
   name: 'TicketList',
   components: {},
   data: () => ({
-    ticketContent: ''
+    ticketContent: '',
+    routePath: ''
   }),
   computed: {
     ...mapState(['tickets']),
     currentTicket() {
       return this.tickets.find(ticket => ticket.slug === this.$route.params.slug);
     }
+  },
+  watch: {
+    currentTicket(ticket) {
+      if(!ticket && this.$route.path === this.routePath){
+        this.$router.push('/tickets');
+      }
+    }
+  },
+  mounted(){
+    this.routePath = this.$route.path;
   },
   methods: {
     updateTicketContent: _.debounce((ticketContent) =>{
