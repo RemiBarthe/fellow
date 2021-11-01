@@ -3,7 +3,7 @@
     {{ selectedSpace.title }}
   </h2>
 
-  <div class="grid gap-5 grid-flow-row lg:grid-flow-col">
+  <div class="grid gap-2.5 grid-flow-row lg:grid-flow-col">
     <TicketCardList status="en cours" />
 
     <TicketCardList status="à faire" />

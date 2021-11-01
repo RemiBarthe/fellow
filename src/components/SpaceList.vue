@@ -54,7 +54,7 @@
       >
         <Icon
           icon="akar-icons:plus"
-          class="mr-1 text-base-lg float-left "
+          class="mr-1 text-base-lg float-left mt-0.5"
         />
         Créer un <br>espace
       </p>
