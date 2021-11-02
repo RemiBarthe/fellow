@@ -26,10 +26,10 @@ export default {
     ...mapState(['connectedUser', 'selectedSpace'])
   },
   mounted() {
-    this.setTickets({ userId: this.connectedUser.uid, spaceId: this.selectedSpace.id });
+    this.fetchTickets({ userId: this.connectedUser.uid, spaceId: this.selectedSpace.id });
   },
   methods: {
-    ...mapActions(['setTickets']),
+    ...mapActions(['fetchTickets']),
   }
 };
 </script>

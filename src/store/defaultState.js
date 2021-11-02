@@ -9,7 +9,7 @@ export default {
   },
   spaces: [],
   selectedSpace: '',
-  unsubscribeUserSpaces: null,
+  unsubscribeSpaces: null,
   tickets: [],
   unsubscribeTickets: null,
   startAnimationOver: false

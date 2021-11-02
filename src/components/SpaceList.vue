@@ -65,8 +65,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { Icon } from '@iconify/vue';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { addSpaceDocument } from '../utils/firestore';
 
 export default {
   name: 'SpaceList',
@@ -81,16 +80,16 @@ export default {
     ...mapState(['spaces', 'selectedSpace', 'connectedUser', 'unsubscribeTickets'])
   },
   mounted() {
-    this.setSpaces(this.connectedUser.uid);
+    this.fetchSpaces(this.connectedUser.uid);
   },
   methods: {
-    ...mapActions(['setSpaces', 'setSelectedSpace', 'setTickets']),
+    ...mapActions(['fetchSpaces', 'setSelectedSpace', 'fetchTickets']),
     selectSpace(space) {
       if(this.unsubscribeTickets){
         this.unsubscribeTickets();
       }
       this.setSelectedSpace(space);
-      this.setTickets({ userId: this.connectedUser.uid, spaceId: space.id });
+      this.fetchTickets({ userId: this.connectedUser.uid, spaceId: space.id });
     },
     createNewSpace() {
       this.showInputNewSpace = true;
@@ -103,16 +102,7 @@ export default {
       const spaceTitle = this.newSpaceTitle.trim();
       this.closeNewSpace();
 
-      const spacesRef = collection(
-        db,
-        'users',
-        this.connectedUser.uid,
-        'spaces'
-      );
-      await addDoc(spacesRef, {
-        title: spaceTitle,
-        ticketsNumber: 0
-      });
+      addSpaceDocument(this.connectedUser.uid, spaceTitle);
     },
     closeNewSpace() {
       this.showInputNewSpace = false;

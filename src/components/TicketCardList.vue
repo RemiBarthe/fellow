@@ -37,8 +37,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import Button from '../components/Button.vue';
-import { doc, setDoc, increment } from 'firebase/firestore';
-import { db } from '../firebase';
+import { incrementTicketsNumber, setTicketDocument } from '../utils/firestore';
 
 export default {
   name: 'TicketCardList',
@@ -62,34 +61,15 @@ export default {
 
       const formattedTitle = this.selectedSpace.title.replace(/\s/g, "").toUpperCase().substring(0, 4);
       const slug = `${formattedTitle}-${this.selectedSpace.ticketsNumber}`;
-      await this.saveNewTicket(slug);
+      await setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, slug);
 
       this.$router.push(`/tickets/${slug}`);
     },
     updateTicketsNumber() {
-      const spaceRef = doc(
-        db,
-        'users',
-        this.connectedUser.uid,
-        'spaces',
-        this.selectedSpace.id
-      );
-      setDoc(spaceRef, { ticketsNumber: increment(1) }, { merge: true });
+      incrementTicketsNumber(this.connectedUser.uid, this.selectedSpace.id);
 
       const updatedSelectedSpace = this.spaces.find(space => space.id === this.selectedSpace.id);
       this.setSelectedSpace(updatedSelectedSpace);
-    },
-    saveNewTicket(slug) {
-      const ticketsRef = doc(
-        db,
-        'users',
-        this.connectedUser.uid,
-        'spaces',
-        this.selectedSpace.id,
-        'tickets',
-        slug
-      );
-      return setDoc(ticketsRef, { slug, title: `Titre temporaire ${slug}`, creationDate: new Date() }, { merge: true });
     }
   }
 };

@@ -56,11 +56,11 @@ export default {
     showSettings: false
   }),
   computed: {
-    ...mapState(['connectedUser', 'unsubscribeUserSpaces', 'unsubscribeTickets'])
+    ...mapState(['connectedUser', 'unsubscribeSpaces', 'unsubscribeTickets'])
   },
   methods: {
     signOutUser() {
-      this.unsubscribeUserSpaces();
+      this.unsubscribeSpaces();
       this.unsubscribeTickets();
 
       const auth = getAuth();
