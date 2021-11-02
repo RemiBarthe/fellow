@@ -60,6 +60,8 @@ export default {
     url('../assets/images/blob-login-blue.svg'),
     url('../assets/images/blob-login-red.svg');
   background-repeat: no-repeat, no-repeat, no-repeat;
-  background-position: bottom left, top left, top right;
+  background-position: bottom left, top left, top right -20%;
+  background-size: calc(max(42%, 500px));
+ 
 }
 </style>
