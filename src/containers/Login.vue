@@ -4,17 +4,17 @@
       <FellowTitle class="mb-5" />
 
       <Button
-        class="bg-black text-white mb-2.5 hover:bg-opacity-90"
-        @click="googleSignIn"
+        class="bg-black text-white mb-2.5 hover:bg-opacity-85"
         icon="fa-brands:google"
+        @click="googleSignIn"
       >
         Se connecter avec Google
       </Button>
 
       <Button
         class="bg-primary text-white hover:bg-opacity-90"
-        @click="facebookSignIn"
         icon="fa-brands:facebook"
+        @click="facebookSignIn"
       >
         Se connecter avec Facebook
       </Button>

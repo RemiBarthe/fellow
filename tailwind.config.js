@@ -569,6 +569,7 @@ module.exports = {
       70: '0.7',
       75: '0.75',
       80: '0.8',
+      85: '0.85',
       90: '0.9',
       95: '0.95',
       100: '1'
@@ -790,7 +791,8 @@ module.exports = {
       full: '100%',
       screen: '100vw',
       min: 'min-content',
-      max: 'max-content'
+      max: 'max-content',
+      fit: 'fit-content'
     }),
     zIndex: {
       auto: 'auto',

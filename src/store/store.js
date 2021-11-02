@@ -6,9 +6,11 @@ import defaultState from './defaultState';
 
 export const SET_CONNECTED_USER = 'SET_CONNECTED_USER';
 export const SET_START_ANIMATION_OVER = 'SET_START_ANIMATION_OVER';
-export const SET_USER_SPACES = 'SET_USER_SPACES';
+export const FETCH_SPACES = 'FETCH_SPACES';
 export const SET_SELECTED_SPACE = 'SET_SELECTED_SPACE';
-export const SET_UNSUBSCRIBE_USER_SPACES = 'SET_UNSUBSCRIBE_USER_SPACES';
+export const SET_UNSUBSCRIBE_SPACES = 'SET_UNSUBSCRIBE_SPACES';
+export const FETCH_TICKETS = 'FETCH_TICKETS';
+export const SET_UNSUBSCRIBE_TICKETS = 'SET_UNSUBSCRIBE_TICKETS';
 export const SET_STATE_TO_DEFAULT = 'SET_STATE_TO_DEFAULT';
 
 const vuexPersist = new VuexPersist({
@@ -16,7 +18,8 @@ const vuexPersist = new VuexPersist({
   reducer: (state) => ({
     connectedUser: state.connectedUser,
     spaces: state.spaces,
-    selectedSpaceId: state.selectedSpaceId
+    selectedSpace: state.selectedSpace,
+    tickets: state.tickets
   })
 });
 
@@ -33,7 +36,7 @@ export const store = createStore({
     setStartAnimationOver({ commit }, payload) {
       commit(SET_START_ANIMATION_OVER, payload);
     },
-    setSpaces({ commit }, payload) {
+    fetchSpaces({ commit }, payload) {
       const unsubscribe = onSnapshot(
         collection(db, 'users', payload, 'spaces'),
         (querySnapshot) => {
@@ -42,13 +45,27 @@ export const store = createStore({
             let id = doc.id;
             spaces.push({ id, ...doc.data() });
           });
-          commit(SET_USER_SPACES, spaces);
-          commit(SET_UNSUBSCRIBE_USER_SPACES, unsubscribe);
+          commit(FETCH_SPACES, spaces);
+          commit(SET_UNSUBSCRIBE_SPACES, unsubscribe);
         }
       );
     },
     setSelectedSpace({ commit }, payload) {
       commit(SET_SELECTED_SPACE, payload);
+    },
+    fetchTickets({ commit }, payload) {
+      const unsubscribe = onSnapshot(
+        collection(db, 'users', payload.userId, 'spaces', payload.spaceId, 'tickets'),
+        (querySnapshot) => {
+          const tickets = [];
+          querySnapshot.forEach((doc) => {
+            let id = doc.id;
+            tickets.push({ id, ...doc.data() });
+          });
+          commit(FETCH_TICKETS, tickets);
+          commit(SET_UNSUBSCRIBE_TICKETS, unsubscribe);
+        }
+      );
     },
     setStateToDefault({ commit }) {
       commit(SET_STATE_TO_DEFAULT);
@@ -66,14 +83,20 @@ export const store = createStore({
     [SET_START_ANIMATION_OVER](state, payload) {
       state.startAnimationOver = payload;
     },
-    [SET_USER_SPACES](state, payload) {
+    [FETCH_SPACES](state, payload) {
       state.spaces = payload;
     },
     [SET_SELECTED_SPACE](state, payload) {
-      state.selectedSpaceId = payload;
+      state.selectedSpace = payload;
     },
-    [SET_UNSUBSCRIBE_USER_SPACES](state, payload) {
-      state.unsubscribeUserSpaces = payload;
+    [SET_UNSUBSCRIBE_SPACES](state, payload) {
+      state.unsubscribeSpaces = payload;
+    },
+    [FETCH_TICKETS](state, payload){
+      state.tickets = payload;
+    },
+    [SET_UNSUBSCRIBE_TICKETS](state, payload) {
+      state.unsubscribeTickets = payload;
     },
     [SET_STATE_TO_DEFAULT](state) {
       Object.assign(state, defaultState);
