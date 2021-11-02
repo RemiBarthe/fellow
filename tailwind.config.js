@@ -791,7 +791,8 @@ module.exports = {
       full: '100%',
       screen: '100vw',
       min: 'min-content',
-      max: 'max-content'
+      max: 'max-content',
+      fit: 'fit-content'
     }),
     zIndex: {
       auto: 'auto',

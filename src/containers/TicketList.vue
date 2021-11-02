@@ -3,9 +3,9 @@
     {{ selectedSpace.title }}
   </h2>
 
-  <div class="grid gap-2.5 justify-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
+  <div class="grid gap-2.5 justify-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 items-center w-fit mx-auto">
     <p
-      class="cursor-pointer rounded p-2 max-w-xs flex justify-end items-end createTicket"
+      class="cursor-pointer rounded p-2 max-w-xs flex justify-end items-end createTicket h-full"
     >
       <Icon
         icon="akar-icons:plus"
@@ -17,7 +17,7 @@
     <div
       v-for="(ticket, key) in tickets"
       :key="key"
-      class="rounded bg-primary p-5 max-w-xs text-white"
+      class="rounded bg-primary p-5 max-w-xs text-white h-full"
     >
       {{ ticket }}
     </div>
