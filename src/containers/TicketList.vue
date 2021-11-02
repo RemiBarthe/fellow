@@ -5,7 +5,8 @@
 
   <div class="grid gap-2.5 justify-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 items-center w-fit mx-auto">
     <p
-      class="cursor-pointer rounded p-2 max-w-xs flex justify-end items-end createTicket h-full"
+      class="cursor-pointer rounded p-2 max-w-xs flex justify-end items-end createTicket h-full select-none"
+      @click="createNewTicket"
     >
       <Icon
         icon="akar-icons:plus"
@@ -26,7 +27,8 @@
 
 <script>
 import { Icon } from '@iconify/vue';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import { incrementTicketsNumber, setTicketDocument } from '../utils/firestore';
 
 export default {
   name: 'TicketList',
@@ -35,7 +37,23 @@ export default {
   },
   data: () => ({}),
   computed: {
-    ...mapState(['selectedSpace', 'tickets'])
+    ...mapState(['selectedSpace', 'tickets', 'connectedUser', 'spaces'])
+  },
+  methods: {
+    ...mapActions(['setSelectedSpace']),
+    async createNewTicket() {
+      await this.updateTicketsNumber();
+
+      const formattedTitle = this.selectedSpace.title.replace(/\s/g, "").toUpperCase().substring(0, 4);
+      const slug = `${formattedTitle}-${this.selectedSpace.ticketsNumber}`;
+      await setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, slug);
+    },
+    updateTicketsNumber() {
+      incrementTicketsNumber(this.connectedUser.uid, this.selectedSpace.id);
+
+      const updatedSelectedSpace = this.spaces.find(space => space.id === this.selectedSpace.id);
+      this.setSelectedSpace(updatedSelectedSpace);
+    }
   }
 };
 </script>
