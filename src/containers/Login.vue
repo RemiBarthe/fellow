@@ -1,5 +1,5 @@
 <template>
-  <section class="flex h-screen bg-light-gray bg-blob">
+  <section class="flex h-screen bg-light-gray bg-blob-login">
     <div class="m-auto flex flex-col bg-white p-5 rounded">
       <FellowTitle class="mb-5" />
 
@@ -55,13 +55,14 @@ export default {
 </script>
 
 <style scoped>
-.bg-blob {
-  background-image: url('../assets/images/blob-login-turquoise.svg'),
-    url('../assets/images/blob-login-blue.svg'),
-    url('../assets/images/blob-login-red.svg');
-  background-repeat: no-repeat, no-repeat, no-repeat;
-  background-position: bottom left, top left, top right -20%;
-  background-size: calc(max(42%, 500px));
- 
-}
+.bg-blob-login {
+    background-image: 
+      url('../assets/images/blobs-login/blob-login-turquoise.svg'),
+      url('../assets/images/blobs-login/blob-login-blue.svg'),
+      url('../assets/images/blobs-login/blob-login-red.svg');
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: bottom left, top left, top right -20%;
+    background-size: calc(max(42%, 500px));
+   
+  }
 </style>
