@@ -8,7 +8,7 @@ import Settings from './containers/Settings.vue';
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'fellow.',
     component: Dashboard
   },
   {
@@ -18,22 +18,22 @@ const routes = [
   },
   {
     path: '/tickets',
-    name: 'Tickets',
+    name: 'Mes tickets',
     component: TicketList
   },
   {
     path: '/tickets/:slug',
-    name: 'Ticket Detail',
+    name: 'Détail ticket',
     component: TicketDetail
   },
   {
     path: '/statistics',
-    name: 'Statistics',
+    name: 'Statistiques',
     component: Statistics
   },
   {
     path: '/settings',
-    name: 'Settings',
+    name: 'Paramètres',
     component: Settings
   }
 ];
@@ -41,6 +41,12 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+});
+
+const DEFAULT_TITLE = 'fellow.';
+router.beforeEach((to, from, next) => {
+  document.title = to.name || DEFAULT_TITLE;
+  next();
 });
 
 export default router;

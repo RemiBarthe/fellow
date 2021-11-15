@@ -12,7 +12,7 @@
       <button
         v-for="(navItem, key) in navList"
         :key="key"
-        class="nav-item hover:text-black flex items-center w-full text-title md:text-base"
+        class="nav-item hover:text-black flex items-center w-full text-title md:text-base cursor-pointer"
         :class="{ selected: $route.path.indexOf(navItem.path) !== -1 }"
         @click="$router.push(navItem.path)"
       >
