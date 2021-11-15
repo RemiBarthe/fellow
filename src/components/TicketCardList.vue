@@ -9,7 +9,7 @@
       class="grid grid-cols-1 gap-2 h-full auto-rows-max"
     >
       <div
-        v-for="(ticket, key) in tickets"
+        v-for="(ticket, key) in filteredTicketsList"
         :key="key"
         class="cursor-pointer truncate"
         @click="$router.push(`/tickets/${ticket.slug}`)"
@@ -52,7 +52,10 @@ export default {
   },
   data: () => ({}),
   computed: {
-    ...mapState(['connectedUser', 'selectedSpace', 'spaces', 'tickets'])
+    ...mapState(['connectedUser', 'selectedSpace', 'spaces', 'tickets']),
+    filteredTicketsList(){
+      return _.take(this.tickets, 6);
+    }
   },
   methods: {
     ...mapActions(['setSelectedSpace']),
