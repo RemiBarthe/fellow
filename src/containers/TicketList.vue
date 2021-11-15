@@ -18,9 +18,16 @@
     <div
       v-for="(ticket, key) in tickets"
       :key="key"
-      class="rounded bg-primary p-5 max-w-xs text-white h-full"
+      class="rounded bg-primary p-5 max-w-xs text-white h-full cursor-pointer flex flex-col justify-between"
+      @click="$router.push(`/tickets/${ticket.slug}`)"
     >
-      {{ ticket }}
+      <p class="text-right mb-4">
+        {{ formatDate(ticket.creationDate) }}
+      </p>
+      <p class="leading-4">
+        <span class="text-xs font-bold">{{ ticket.slug }}</span>
+        <br>{{ ticket.title }}
+      </p>
     </div>
   </div>
 </template>
@@ -29,6 +36,7 @@
 import { Icon } from '@iconify/vue';
 import { mapState, mapActions } from 'vuex';
 import { incrementTicketsNumber, setTicketDocument } from '../utils/firestore';
+import moment from 'moment';
 
 export default {
   name: 'TicketList',
@@ -53,6 +61,9 @@ export default {
 
       const updatedSelectedSpace = this.spaces.find(space => space.id === this.selectedSpace.id);
       this.setSelectedSpace(updatedSelectedSpace);
+    },
+    formatDate(date){
+      return moment(date.toDate()).format("DD/MM/YY");
     }
   }
 };

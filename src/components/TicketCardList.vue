@@ -14,7 +14,7 @@
         class="cursor-pointer truncate"
         @click="$router.push(`/tickets/${ticket.slug}`)"
       >
-        <span class="bg-primary text-white px-2.5 py-1 rounded font-bold text-sm">{{ ticket.slug }}</span> 
+        <span class="bg-primary text-white px-2.5 py-1 rounded font-bold text-xs">{{ ticket.slug }}</span> 
         {{ ticket.title }}
       </div>
     </div>
