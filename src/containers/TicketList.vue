@@ -63,7 +63,9 @@ export default {
       this.setSelectedSpace(updatedSelectedSpace);
     },
     formatDate(date){
-      return moment(date.toDate()).format("DD/MM/YY");
+      if (typeof date.toDate !== "undefined") { 
+        return moment(date.toDate()).format("DD/MM/YY");
+      }
     }
   }
 };
