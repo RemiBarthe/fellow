@@ -1,9 +1,21 @@
 <template>
   <h2 class="font-bold text-title mb-8">
-    <span class="bg-primary text-white px-2.5 py-1 rounded font-bold text-base">
-      {{ $route.params.slug }} 
-    </span>
-    {{ currentTicket?.title }}
+    <contenteditable
+      v-model="currentTicket.slug"
+      tag="span"
+      class="bg-primary text-white px-2.5 py-1 rounded font-bold text-base"
+      :no-n-l="true"
+      :no-h-t-m-l="true"
+    />
+
+    <contenteditable
+      v-model="currentTicket.title"
+      tag="span"
+      class="px-2.5 py-1 rounded"
+      :no-n-l="true"
+      :no-h-t-m-l="true"
+      @input="updateTicket"
+    />
   </h2>
 
   <QuillEditor
@@ -12,7 +24,7 @@
     theme="bubble"
     toolbar="essential"
     class="text-base"
-    @textChange="updateTicketContent"
+    @textChange="updateTicket"
   />
 </template>
 
@@ -20,10 +32,13 @@
 import _ from "lodash";
 import { mapState } from "vuex";
 import { setTicketDocument } from '../utils/firestore';
+import contenteditable from 'vue-contenteditable';
 
 export default {
   name: 'TicketList',
-  components: {},
+  components: {
+    contenteditable
+  },
   data: () => ({
     routePath: ''
   }),
@@ -44,7 +59,7 @@ export default {
     this.routePath = this.$route.path;
   },
   methods: {
-    updateTicketContent: _.debounce(function() {
+    updateTicket: _.debounce(function() {
       setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
     }, 1000)
   }
