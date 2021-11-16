@@ -7,28 +7,28 @@
   </h2>
 
   <QuillEditor
-    v-model:content="ticketContent"
+    v-model:content="currentTicket.content"
     content-type="html"
     theme="bubble"
     toolbar="essential"
     class="text-base"
-    @textChange="updateTicketContent(ticketContent)"
+    @textChange="updateTicketContent"
   />
 </template>
 
 <script>
 import _ from "lodash";
 import { mapState } from "vuex";
+import { setTicketDocument } from '../utils/firestore';
 
 export default {
   name: 'TicketList',
   components: {},
   data: () => ({
-    ticketContent: '',
     routePath: ''
   }),
   computed: {
-    ...mapState(['tickets']),
+    ...mapState(['tickets', 'connectedUser', 'selectedSpace']),
     currentTicket() {
       return this.tickets.find(ticket => ticket.slug === this.$route.params.slug);
     }
@@ -44,8 +44,8 @@ export default {
     this.routePath = this.$route.path;
   },
   methods: {
-    updateTicketContent: _.debounce((ticketContent) =>{
-      console.log(ticketContent);
+    updateTicketContent: _.debounce(function() {
+      setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
     }, 1000)
   }
 };

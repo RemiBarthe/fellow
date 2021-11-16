@@ -31,7 +31,7 @@ export const incrementTicketsNumber = (userId, spaceId) => {
   setDoc(spaceRef, { ticketsNumber: increment(1) }, { merge: true });
 };
 
-export const setTicketDocument = (userId, spaceId, slug) => {
+export const addTicketDocument = (userId, spaceId, slug) => {
   const ticketsRef = doc(
     db,
     'users',
@@ -44,6 +44,20 @@ export const setTicketDocument = (userId, spaceId, slug) => {
   return setDoc(ticketsRef, { 
     slug, 
     title: `Titre temporaire ${slug}`, 
-    creationDate: new Date() 
+    creationDate: new Date(),
+    content: '' 
   }, { merge: true });
+};
+
+export const setTicketDocument = (userId, spaceId, ticket) => {
+  const ticketsRef = doc(
+    db,
+    'users',
+    userId,
+    'spaces',
+    spaceId,
+    'tickets',
+    ticket.slug
+  );
+  return setDoc(ticketsRef, ticket, { merge: true });
 };

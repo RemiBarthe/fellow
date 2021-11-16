@@ -37,7 +37,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import Button from '../components/Button.vue';
-import { incrementTicketsNumber, setTicketDocument } from '../utils/firestore';
+import { incrementTicketsNumber, addTicketDocument } from '../utils/firestore';
 
 export default {
   name: 'TicketCardList',
@@ -64,7 +64,7 @@ export default {
 
       const formattedTitle = this.selectedSpace.title.replace(/\s/g, "").toUpperCase().substring(0, 4);
       const slug = `${formattedTitle}-${this.selectedSpace.ticketsNumber}`;
-      await setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, slug);
+      await addTicketDocument(this.connectedUser.uid, this.selectedSpace.id, slug);
 
       this.$router.push(`/tickets/${slug}`);
     },

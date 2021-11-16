@@ -35,7 +35,7 @@
 <script>
 import { Icon } from '@iconify/vue';
 import { mapState, mapActions } from 'vuex';
-import { incrementTicketsNumber, setTicketDocument } from '../utils/firestore';
+import { incrementTicketsNumber, addTicketDocument } from '../utils/firestore';
 import moment from 'moment';
 
 export default {
@@ -54,7 +54,7 @@ export default {
 
       const formattedTitle = this.selectedSpace.title.replace(/\s/g, "").toUpperCase().substring(0, 4);
       const slug = `${formattedTitle}-${this.selectedSpace.ticketsNumber}`;
-      await setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, slug);
+      await addTicketDocument(this.connectedUser.uid, this.selectedSpace.id, slug);
     },
     updateTicketsNumber() {
       incrementTicketsNumber(this.connectedUser.uid, this.selectedSpace.id);
