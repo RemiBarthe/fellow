@@ -5,38 +5,43 @@
   >
     <Icon icon="akar-icons:arrow-left" />
   </button>
-    
-  <h2
-    v-if="currentTicket"
-    class="font-bold text-title mb-8"
-  >
-    <contenteditable
-      v-model="currentTicket.slug"
-      tag="span"
-      class="bg-primary text-white px-2.5 py-1 rounded font-bold text-base"
-      :no-n-l="true"
-      :no-h-t-m-l="true"
-    />
 
-    <contenteditable
-      v-model="currentTicket.title"
-      tag="span"
-      class="px-2.5 py-1 rounded"
-      :no-n-l="true"
-      :no-h-t-m-l="true"
-      @input="updateTicket"
-    />
-  </h2>
+  <template v-if="currentTicket">
+    <h2
+      class="font-bold text-title mb-8"
+    >
+      <contenteditable
+        v-model="currentTicket.slug"
+        tag="span"
+        class="bg-primary text-white px-2.5 py-1 rounded font-bold text-base"
+        :no-n-l="true"
+        :no-h-t-m-l="true"
+      />
 
-  <QuillEditor
-    v-if="currentTicket"
-    v-model:content="currentTicket.content"
-    content-type="html"
-    theme="bubble"
-    toolbar="essential"
-    class="text-base"
-    @textChange="updateTicket"
-  />
+      <contenteditable
+        v-model="currentTicket.title"
+        tag="span"
+        class="px-2.5 py-1 rounded"
+        :no-n-l="true"
+        :no-h-t-m-l="true"
+        @input="updateTicket"
+      />
+    </h2>
+
+    <p class="text-sm text-right mb-2">
+      Créé {{ formatDate(currentTicket.creationDate) }}
+      <br> Dernière édition {{ formatDate(currentTicket.updateDate) }}
+    </p>
+
+    <QuillEditor
+      v-model:content="currentTicket.content"
+      content-type="html"
+      theme="bubble"
+      toolbar="essential"
+      class="text-base"
+      @textChange="updateTicket"
+    />
+  </template>
 </template>
 
 <script>
@@ -45,6 +50,7 @@ import { mapState } from "vuex";
 import { setTicketDocument } from '../utils/firestore';
 import contenteditable from 'vue-contenteditable';
 import { Icon } from '@iconify/vue';
+import moment from 'moment';
 
 export default {
   name: 'TicketList',
@@ -53,7 +59,8 @@ export default {
     Icon
   },
   data: () => ({
-    routePath: ''
+    routePath: '',
+    blockFirstEdit: true
   }),
   computed: {
     ...mapState(['tickets', 'connectedUser', 'selectedSpace']),
@@ -78,8 +85,18 @@ export default {
   },
   methods: {
     updateTicket: _.debounce(function() {
-      setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
-    }, 1000)
+      // blockFirstEdit cause QuillEditor trigger textChange when populating itself
+      if(!this.blockFirstEdit){
+        this.currentTicket.updateDate = new Date();
+        setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
+      }
+      this.blockFirstEdit = false;
+    }, 1000),
+    formatDate(date){
+      if (typeof date.toDate !== "undefined") { 
+        return moment(date.toDate()).locale('fr').fromNow();
+      }
+    }
   }
 };
 </script>
