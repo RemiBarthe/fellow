@@ -4,6 +4,7 @@ import TicketList from './containers/TicketList.vue';
 import TicketDetail from './containers/TicketDetail.vue';
 import Statistics from './containers/Statistics.vue';
 import Settings from './containers/Settings.vue';
+import NotFound from './containers/NotFound.vue';
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
     path: '/settings',
     name: 'Paramètres',
     component: Settings
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: NotFound
   }
 ];
 
