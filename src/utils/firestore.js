@@ -45,7 +45,9 @@ export const addTicketDocument = (userId, spaceId, slug) => {
     slug, 
     title: `Titre temporaire ${slug}`, 
     creationDate: new Date(),
-    content: '' 
+    updateDate: new Date(),
+    content: '',
+    state: 'todo'
   }, { merge: true });
 };
 

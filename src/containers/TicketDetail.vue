@@ -1,5 +1,15 @@
 <template>
-  <h2 class="font-bold text-title mb-8">
+  <button
+    class="px-2.5 py-1 rounded text-black text-title md:text-base-lg hover:bg-gray transition-colors duration-200"
+    @click="$router.push('/tickets')"
+  >
+    <Icon icon="akar-icons:arrow-left" />
+  </button>
+    
+  <h2
+    v-if="currentTicket"
+    class="font-bold text-title mb-8"
+  >
     <contenteditable
       v-model="currentTicket.slug"
       tag="span"
@@ -19,6 +29,7 @@
   </h2>
 
   <QuillEditor
+    v-if="currentTicket"
     v-model:content="currentTicket.content"
     content-type="html"
     theme="bubble"
@@ -33,11 +44,13 @@ import _ from "lodash";
 import { mapState } from "vuex";
 import { setTicketDocument } from '../utils/firestore';
 import contenteditable from 'vue-contenteditable';
+import { Icon } from '@iconify/vue';
 
 export default {
   name: 'TicketList',
   components: {
-    contenteditable
+    contenteditable,
+    Icon
   },
   data: () => ({
     routePath: ''
@@ -57,6 +70,11 @@ export default {
   },
   mounted(){
     this.routePath = this.$route.path;
+    setTimeout(() => {
+      if(!this.currentTicket){
+        this.$router.push('/404');
+      }
+    }, 200);
   },
   methods: {
     updateTicket: _.debounce(function() {
