@@ -1,6 +1,8 @@
 <template>
   <button
-    class="px-2.5 py-1 rounded text-black text-title md:text-base-lg hover:bg-gray transition-colors duration-200"
+    class="px-2.5 py-1 rounded text-black text-title md:text-base-lg 
+    hover:bg-gray transition-colors duration-200 tooltip tooltip-top"
+    data-title="Retour aux tickets"
     @click="$router.push('/tickets')"
   >
     <Icon icon="akar-icons:arrow-left" />
@@ -41,6 +43,16 @@
       class="text-base"
       @textChange="updateTicket"
     />
+
+    <button
+      class="px-2.5 py-1 rounded text-thirdary text-title float-right
+      hover:bg-thirdary hover:bg-opacity-20 transition-colors duration-200 mt-4 tooltip tooltip-bottom"
+      title="Supprimer le ticket"
+      data-title="Supprimer le ticket"
+      @click="console.log('eheh')"
+    >
+      <Icon icon="fluent:delete-16-regular" /> 
+    </button>
   </template>
 </template>
 
