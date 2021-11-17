@@ -1,5 +1,5 @@
 import { db } from '../firebase';
-import { doc,  collection, setDoc, addDoc, increment, onSnapshot } from 'firebase/firestore';
+import { doc,  collection, setDoc, addDoc, increment, deleteDoc } from 'firebase/firestore';
 
 export const setUserDocument = (user) => {
   const userRef = doc(db, 'users', user.uid);
@@ -62,4 +62,17 @@ export const setTicketDocument = (userId, spaceId, ticket) => {
     ticket.slug
   );
   return setDoc(ticketsRef, ticket, { merge: true });
+};
+
+export const deleteTicketDocument = (userId, spaceId, ticket) => {
+  const ticketsRef = doc(
+    db,
+    'users',
+    userId,
+    'spaces',
+    spaceId,
+    'tickets',
+    ticket.slug
+  );
+  return deleteDoc(ticketsRef, ticket, { merge: true });
 };

@@ -49,7 +49,7 @@
       hover:bg-thirdary hover:bg-opacity-20 transition-colors duration-200 mt-4 tooltip tooltip-bottom"
       title="Supprimer le ticket"
       data-title="Supprimer le ticket"
-      @click="console.log('eheh')"
+      @click="deleteTicket"
     >
       <Icon icon="fluent:delete-16-regular" /> 
     </button>
@@ -59,7 +59,7 @@
 <script>
 import _ from "lodash";
 import { mapState } from "vuex";
-import { setTicketDocument } from '../utils/firestore';
+import { setTicketDocument, deleteTicketDocument } from '../utils/firestore';
 import contenteditable from 'vue-contenteditable';
 import { Icon } from '@iconify/vue';
 import moment from 'moment';
@@ -108,6 +108,9 @@ export default {
       if (typeof date.toDate !== "undefined") { 
         return moment(date.toDate()).locale('fr').fromNow();
       }
+    },
+    deleteTicket() {
+      deleteTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
     }
   }
 };
