@@ -10,12 +10,12 @@
 
   <template v-if="currentTicket">
     <h2
-      class="font-bold text-title mb-8"
+      class="font-bold text-title mb-5 flex items-center"
     >
       <contenteditable
         v-model="currentTicket.slug"
         tag="span"
-        :class="`px-2.5 py-1 rounded font-bold text-base ${radioTabStyle}`"
+        :class="`px-2.5 py-1 rounded font-bold text-base leading-4 ${radioTabStyle}`"
         :no-n-l="true"
         :no-h-t-m-l="true"
       />
@@ -30,22 +30,24 @@
       />
     </h2>
 
-    <div :class="`w-fit p-1 rounded flex gap-1 ${radioTabStyle}`">
-      <button
-        v-for="state in ticketStates"
-        :key="state.key"
-        class="px-2.5 py-1 rounded "
-        :class="[state.key === currentTicket.state ? 'bg-white text-black font-bold' : 'hover:bg-white hover:bg-opacity-20' ]"
-        @click="updateTicketState(state.key)"
-      >
-        {{ state.label }}
-      </button>
-    </div>
+    <div class="flex justify-between items-end mb-2.5">
+      <p class="text-sm text-left text-gray">
+        Créé {{ formatDate(currentTicket.creationDate) }}
+        <br> Dernière édition {{ formatDate(currentTicket.updateDate) }}
+      </p>
 
-    <p class="text-sm text-right mb-2">
-      Créé {{ formatDate(currentTicket.creationDate) }}
-      <br> Dernière édition {{ formatDate(currentTicket.updateDate) }}
-    </p>
+      <div :class="`w-fit p-1 rounded flex gap-1 ${radioTabStyle}`">
+        <button
+          v-for="state in ticketStates"
+          :key="state.key"
+          class="px-2.5 py-1 rounded "
+          :class="[state.key === currentTicket.state ? 'bg-white text-black font-bold' : 'hover:bg-white hover:bg-opacity-20' ]"
+          @click="updateTicketState(state.key)"
+        >
+          {{ state.label }}
+        </button>
+      </div>
+    </div>
 
     <QuillEditor
       v-model:content="currentTicket.content"
