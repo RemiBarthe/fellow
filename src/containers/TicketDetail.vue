@@ -15,7 +15,7 @@
       <contenteditable
         v-model="currentTicket.slug"
         tag="span"
-        class="bg-primary text-white px-2.5 py-1 rounded font-bold text-base"
+        :class="`px-2.5 py-1 rounded font-bold text-base ${radioTabStyle}`"
         :no-n-l="true"
         :no-h-t-m-l="true"
       />
@@ -29,6 +29,18 @@
         @input="updateTicket"
       />
     </h2>
+
+    <div :class="`w-fit p-1 rounded flex gap-1 ${radioTabStyle}`">
+      <button
+        v-for="state in ticketStates"
+        :key="state.key"
+        class="px-2.5 py-1 rounded "
+        :class="[state.key === currentTicket.state ? 'bg-white text-black font-bold' : 'hover:bg-white hover:bg-opacity-20' ]"
+        @click="updateTicketState(state.key)"
+      >
+        {{ state.label }}
+      </button>
+    </div>
 
     <p class="text-sm text-right mb-2">
       Créé {{ formatDate(currentTicket.creationDate) }}
@@ -47,7 +59,6 @@
     <button
       class="px-2.5 py-1 rounded text-thirdary text-title float-right
       hover:bg-thirdary hover:bg-opacity-20 transition-colors duration-200 mt-4 tooltip tooltip-bottom"
-      title="Supprimer le ticket"
       data-title="Supprimer le ticket"
       @click="deleteTicket"
     >
@@ -72,12 +83,21 @@ export default {
   },
   data: () => ({
     routePath: '',
-    blockFirstEdit: true
+    blockFirstEdit: true,
+    ticketStates: [
+      { label: 'À faire', key: 'todo', style: 'bg-secondary text-black' },
+      { label: 'En cours', key: 'inprogress', style: 'bg-primary text-white' },
+      { label: 'Bloqué', key: 'bloqued', style: 'bg-thirdary text-white' },
+      { label: 'Terminé', key: 'done', style: 'bg-gray text-black' }
+    ]
   }),
   computed: {
     ...mapState(['tickets', 'connectedUser', 'selectedSpace']),
     currentTicket() {
       return this.tickets.find(ticket => ticket.slug === this.$route.params.slug);
+    },
+    radioTabStyle(){
+      return this.ticketStates.find(state => state.key === this.currentTicket.state).style;
     }
   },
   watch: {
@@ -111,6 +131,10 @@ export default {
     },
     deleteTicket() {
       deleteTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
+    },
+    updateTicketState(state){
+      this.currentTicket.state = state;
+      this.updateTicket();
     }
   }
 };
