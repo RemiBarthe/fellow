@@ -40,8 +40,8 @@ export default {
       url('../assets/images/blobs-global-1/blob-global-1.svg');
     background-repeat: no-repeat;
     background-position: center right;
+    background-attachment: fixed;
     background-size: calc(max(35%, 400px));
-   
   }
 
   .bg-blob-global-2 {
@@ -50,8 +50,8 @@ export default {
       url('../assets/images/blobs-global-2/blob-global-right-2.svg');
     background-repeat: no-repeat, no-repeat;
     background-position: center left 18.5%, bottom right;
+    background-attachment: fixed;
     background-size: calc(max(40%, 500px));
-   
   }
 
   .bg-blob-global-3 {
@@ -61,8 +61,8 @@ export default {
         url('../assets/images/blobs-global-3/blob-global-top-3.svg');
     background-repeat: no-repeat, no-repeat, no-repeat;
     background-position: bottom left 18.5%, center right, center top;
+    background-attachment: fixed;
     background-size: calc(max(30%, 500px));
-   
   }
 
   </style>
