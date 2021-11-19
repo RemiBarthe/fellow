@@ -16,9 +16,15 @@
     </p>
 
     <div
-      v-for="(ticket, key) in tickets"
-      :key="key"
-      class="rounded bg-primary p-5 max-w-xs text-white h-full cursor-pointer flex flex-col justify-between"
+      v-for="ticket in tickets"
+      :key="ticket.slug"
+      class="rounded p-5 max-w-xs h-full cursor-pointer flex flex-col justify-between"
+      :class="[
+        ticket.state === ticketStates[0].key ? ticketStates[0].style : '',
+        ticket.state === ticketStates[1].key ? ticketStates[1].style : '',
+        ticket.state === ticketStates[2].key ? ticketStates[2].style : '',
+        ticket.state === ticketStates[3].key ? ticketStates[3].style : '',
+      ]"
       @click="$router.push(`/tickets/${ticket.slug}`)"
     >
       <p class="text-right mb-4">
@@ -37,13 +43,17 @@ import { Icon } from '@iconify/vue';
 import { mapState, mapActions } from 'vuex';
 import { incrementTicketsNumber, addTicketDocument } from '../utils/firestore';
 import moment from 'moment';
+import { TICKET_STATES } from "../utils/ticketStates";
+
 
 export default {
   name: 'TicketList',
   components: {
     Icon
   },
-  data: () => ({}),
+  data: () => ({
+    ticketStates: TICKET_STATES
+  }),
   computed: {
     ...mapState(['selectedSpace', 'tickets', 'connectedUser', 'spaces'])
   },

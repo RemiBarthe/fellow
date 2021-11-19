@@ -76,6 +76,7 @@ import { setTicketDocument, deleteTicketDocument } from '../utils/firestore';
 import contenteditable from 'vue-contenteditable';
 import { Icon } from '@iconify/vue';
 import moment from 'moment';
+import { TICKET_STATES } from "../utils/ticketStates";
 
 export default {
   name: 'TicketList',
@@ -86,12 +87,7 @@ export default {
   data: () => ({
     routePath: '',
     blockFirstEdit: true,
-    ticketStates: [
-      { label: 'À faire', key: 'todo', style: 'bg-secondary text-black' },
-      { label: 'En cours', key: 'inprogress', style: 'bg-primary text-white' },
-      { label: 'Bloqué', key: 'bloqued', style: 'bg-thirdary text-white' },
-      { label: 'Terminé', key: 'done', style: 'bg-gray text-black' }
-    ]
+    ticketStates: TICKET_STATES
   }),
   computed: {
     ...mapState(['tickets', 'connectedUser', 'selectedSpace']),
