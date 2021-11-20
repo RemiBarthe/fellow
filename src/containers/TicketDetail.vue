@@ -116,7 +116,7 @@ export default {
   methods: {
     updateTicket: _.debounce(function() {
       // blockFirstEdit cause QuillEditor trigger textChange when populating itself
-      if(!this.blockFirstEdit){
+      if(!this.blockFirstEdit || !this.currentTicket.content){
         this.currentTicket.updateDate = new Date();
         setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
       }
