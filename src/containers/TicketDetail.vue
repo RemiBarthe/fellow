@@ -10,7 +10,7 @@
 
   <template v-if="currentTicket">
     <h2
-      class="font-bold text-title mb-5 flex items-center"
+      class="font-bold text-title mb-5 flex flex-wrap items-center"
     >
       <contenteditable
         v-model="currentTicket.slug"
@@ -30,13 +30,13 @@
       />
     </h2>
 
-    <div class="flex justify-between items-end mb-2.5">
+    <div class="flex flex-wrap justify-between items-end mb-2.5">
       <p class="text-sm text-left text-gray">
         Créé {{ formatDate(currentTicket.creationDate) }}
         <br> Dernière édition {{ formatDate(currentTicket.updateDate) }}
       </p>
 
-      <div :class="`w-fit p-1 rounded flex gap-1 ${radioTabStyle}`">
+      <div :class="`text-sm md:text-base w-fit p-1 rounded flex gap-1 ${radioTabStyle}`">
         <button
           v-for="state in ticketStates"
           :key="state.key"
