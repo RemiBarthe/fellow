@@ -22,7 +22,7 @@ export default {
     title() {
       return this.short ? this.shortTitle : this.regularTitle;
     }
-  }
+  },
 };
 </script>
 

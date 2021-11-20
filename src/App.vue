@@ -2,7 +2,7 @@
   <div class="font-text text-base font-normal">
     <StartAnimation v-if="!startAnimationOver" />
     <template v-else>
-      <GlobalContainer v-if="connectedUser.uid && selectedSpaceId" />
+      <GlobalContainer v-if="connectedUser.uid && selectedSpace.id" />
 
       <ChooseSpace v-else-if="connectedUser.uid" />
 
@@ -13,13 +13,12 @@
 
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
 import { mapActions, mapState } from 'vuex';
 import StartAnimation from './containers/StartAnimation.vue';
 import Login from './containers/Login.vue';
 import GlobalContainer from './containers/GlobalContainer.vue';
 import ChooseSpace from './containers/ChooseSpace.vue';
-import { db } from './firebase';
+import { setUserDocument } from './utils/firestore';
 
 export default {
   name: 'App',
@@ -33,7 +32,7 @@ export default {
     tempUser: {}
   }),
   computed: {
-    ...mapState(['connectedUser', 'startAnimationOver', 'selectedSpaceId'])
+    ...mapState(['connectedUser', 'startAnimationOver', 'selectedSpace'])
   },
   created() {
     const auth = getAuth();
@@ -49,9 +48,7 @@ export default {
           uid: user.uid
         };
 
-        const userDb = doc(db, 'users', user.uid);
-        setDoc(userDb, this.tempUser, { merge: true });
-
+        setUserDocument(this.tempUser);
         this.setConnectedUser(this.tempUser);
       } else {
         this.setStateToDefault();

@@ -7,8 +7,10 @@ export default {
     photoUrl: '',
     uid: ''
   },
-  spaces: {},
-  selectedSpaceId: '',
-  unsubscribeUserSpaces: null,
+  spaces: [],
+  selectedSpace: '',
+  unsubscribeSpaces: null,
+  tickets: [],
+  unsubscribeTickets: null,
   startAnimationOver: false
 };

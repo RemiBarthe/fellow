@@ -16,7 +16,6 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-
       black: colors.black,
       white: colors.white,
       red: colors.red,
@@ -30,7 +29,7 @@ module.exports = {
       secondary: '#59C3C3',
       thirdary: '#F45B69',
       'light-gray': '#F1F1F1',
-      gray: '#CACACA'
+      gray: '#B0B0B0'
     },
     spacing: {
       px: '1px',
@@ -569,6 +568,7 @@ module.exports = {
       70: '0.7',
       75: '0.75',
       80: '0.8',
+      85: '0.85',
       90: '0.9',
       95: '0.95',
       100: '1'
@@ -790,7 +790,8 @@ module.exports = {
       full: '100%',
       screen: '100vw',
       min: 'min-content',
-      max: 'max-content'
+      max: 'max-content',
+      fit: 'fit-content'
     }),
     zIndex: {
       auto: 'auto',
