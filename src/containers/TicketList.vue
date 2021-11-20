@@ -3,7 +3,7 @@
     {{ selectedSpace.title }}
   </h2>
 
-  <div class="flex gap-5 mb-2.5">
+  <div class="flex flex-wrap gap-5 mb-2.5">
     <button
       v-for="state in ticketStates"
       :key="state.key"
