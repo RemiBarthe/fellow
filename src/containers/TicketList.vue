@@ -1,7 +1,22 @@
 <template>
-  <h2 class="font-bold text-title mb-8">
+  <h2 class="font-bold text-title mb-5">
     {{ selectedSpace.title }}
   </h2>
+
+  <div class="flex gap-5 mb-2.5">
+    <button
+      v-for="state in ticketStates"
+      :key="state.key"
+      class="flex items-center"
+      :class="[stateFilters.includes(state.key) ? 'text-black' : 'text-gray']"
+      @click="updateStateFilters(state.key)"
+    >
+      <div
+        class="w-4 h-4 rounded mr-1"
+        :class="[stateFilters.includes(state.key) ? state.style : 'bg-gray']"
+      />{{ state.label }}
+    </button>
+  </div>
 
   <div class="grid gap-2.5 justify-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 items-center w-fit mx-auto">
     <p
@@ -16,14 +31,14 @@
     </p>
 
     <div
-      v-for="ticket in tickets"
+      v-for="ticket in filteredTickets"
       :key="ticket.slug"
       class="rounded p-5 max-w-xs h-full cursor-pointer flex flex-col justify-between"
       :class="[
         ticket.state === ticketStates[0].key ? ticketStates[0].style : '',
         ticket.state === ticketStates[1].key ? ticketStates[1].style : '',
         ticket.state === ticketStates[2].key ? ticketStates[2].style : '',
-        ticket.state === ticketStates[3].key ? ticketStates[3].style : '',
+        ticket.state === ticketStates[3].key ? ticketStates[3].style : ''
       ]"
       @click="$router.push(`/tickets/${ticket.slug}`)"
     >
@@ -52,10 +67,26 @@ export default {
     Icon
   },
   data: () => ({
-    ticketStates: TICKET_STATES
+    ticketStates: TICKET_STATES,
+    stateFilters: [
+      TICKET_STATES[0].key, 
+      TICKET_STATES[1].key, 
+      TICKET_STATES[2].key, 
+      TICKET_STATES[3].key 
+    ]
   }),
   computed: {
-    ...mapState(['selectedSpace', 'tickets', 'connectedUser', 'spaces'])
+    ...mapState(['selectedSpace', 'tickets', 'connectedUser', 'spaces']),
+    filteredTickets(){
+      return this.tickets.filter((ticket) => {
+        let showTicket = false;
+        this.stateFilters.forEach(filter => {
+          if(ticket.state === filter)
+            showTicket = true;
+        });
+        return showTicket;
+      });
+    }
   },
   methods: {
     ...mapActions(['setSelectedSpace']),
@@ -72,10 +103,14 @@ export default {
       const updatedSelectedSpace = this.spaces.find(space => space.id === this.selectedSpace.id);
       this.setSelectedSpace(updatedSelectedSpace);
     },
-    formatDate(date){
+    formatDate(date) {
       if (typeof date.toDate !== "undefined") { 
         return moment(date.toDate()).format("DD/MM/YY");
       }
+    },
+    updateStateFilters(state) {
+      this.stateFilters = _.xor(this.stateFilters, [state]);
+
     }
   }
 };

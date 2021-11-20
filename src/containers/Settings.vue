@@ -1,5 +1,5 @@
 <template>
-  <h2 class="font-bold text-title mb-8">
+  <h2 class="font-bold text-title mb-5">
     Paramètres
   </h2>
 </template>
