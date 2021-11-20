@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white p-5 rounded flex flex-col justify-between">
     <p class="font-bold pb-2">
-      Tickets {{ status }}
+      Tickets {{ state.label.toLowerCase() }}
     </p>
 
     <div
@@ -14,14 +14,14 @@
         class="cursor-pointer truncate"
         @click="$router.push(`/tickets/${ticket.slug}`)"
       >
-        <span class="bg-primary text-white px-2.5 py-1 rounded font-bold text-xs">{{ ticket.slug }}</span> 
+        <span :class="`px-2.5 py-1 rounded font-bold text-xs ${state.style}`">{{ ticket.slug }}</span> 
         {{ ticket.title }}
       </div>
     </div>
 
     <template v-else>
       <p class="text-gray text-center pb-2">
-        Vous n’avez aucun ticket {{ status }}
+        Vous n’avez aucun ticket {{ state.label.toLowerCase() }}
       </p>
 
       <Button
@@ -45,14 +45,18 @@ export default {
     Button
   },
   props: {
-    status: {
-      type: String,
+    state: {
+      type: Object,
       default: null
+    },
+    tickets: {
+      type: Array,
+      required: true
     }
   },
   data: () => ({}),
   computed: {
-    ...mapState(['connectedUser', 'selectedSpace', 'spaces', 'tickets']),
+    ...mapState(['connectedUser', 'selectedSpace', 'spaces']),
     filteredTicketsList(){
       return _.take(this.tickets, 6);
     }
