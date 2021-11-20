@@ -35,10 +35,7 @@
       :key="ticket.slug"
       class="rounded p-5 max-w-xs h-full cursor-pointer flex flex-col justify-between"
       :class="[
-        ticket.state === ticketStates[0].key ? ticketStates[0].style : '',
-        ticket.state === ticketStates[1].key ? ticketStates[1].style : '',
-        ticket.state === ticketStates[2].key ? ticketStates[2].style : '',
-        ticket.state === ticketStates[3].key ? ticketStates[3].style : ''
+        styleTicketState(ticket.state)
       ]"
       @click="$router.push(`/tickets/${ticket.slug}`)"
     >
@@ -72,7 +69,7 @@ export default {
       TICKET_STATES[0].key, 
       TICKET_STATES[1].key, 
       TICKET_STATES[2].key, 
-      TICKET_STATES[3].key 
+      TICKET_STATES[3].key
     ]
   }),
   computed: {
@@ -110,7 +107,9 @@ export default {
     },
     updateStateFilters(state) {
       this.stateFilters = _.xor(this.stateFilters, [state]);
-
+    },
+    styleTicketState(state){
+      return this.ticketStates.find(ticketState => ticketState.key === state)?.style;
     }
   }
 };
