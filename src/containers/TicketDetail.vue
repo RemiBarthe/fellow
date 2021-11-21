@@ -12,27 +12,49 @@
     <h2
       class="font-bold text-title mb-5 flex flex-wrap items-center relative"
     >
-      <contenteditable
-        v-model="slugCurrentTicket"
-        tag="span"
-        :class="`px-2.5 py-1 rounded font-bold text-base leading-4 ${radioTabStyle}`"
-        :no-n-l="true"
-        :no-h-t-m-l="true"
-        @keyup.enter.prevent="editSlug()"
-        @focus="showHintSaveSlug = true"
-        @blur="showHintSaveSlug = false"
-      />
+      <span
+        :class="`px-2.5 py-1 rounded font-bold text-base leading-4 tooltip tooltip-bottom cursor-pointer ${radioTabStyle}`"
+        data-title="Modifier le slug"
+        @click="showEditSlugModal = true"
+      >{{ currentTicket.slug }}</span>
 
-      <p
-        v-if="showHintSaveSlug"
-        class="flex absolute justify-end left-1 -bottom-2 font-bold text-sm"
+      <Modal
+        v-if="showEditSlugModal"
+        @closeModal="showEditSlugModal = false"
       >
-        <Icon
-          icon="fluent:arrow-enter-left-24-filled"
-          class="mr-1 mt-1"
-        />
-        Valider
-      </p>
+        <h2 class="text-title font-bold mb-5">
+          Modifier le slug
+        </h2>
+
+        <input
+          v-model="slugCurrentTicket"
+          type="text"
+          class="text-base w-full border-2 border-primary rounded px-2.5 py-1"
+          @keyup.enter.prevent="editSlug()"
+          @keyup.esc="closeEditSlugModal()"
+        >
+        <p
+          class="flex relative justify-end right-4 font-bold text-sm cursor-pointer"
+          @click="editSlug()"
+        >
+          <Icon
+            icon="fluent:arrow-enter-left-24-filled"
+            class="mr-1 mt-1"
+          />
+          Valider
+        </p>
+
+        <p
+          class="flex relative justify-end right-4 text-sm cursor-pointer"
+          @click="closeEditSlugModal()"
+        >
+          <Icon
+            icon="mdi:keyboard-esc"
+            class="mr-1 mt-1"
+          />
+          Annuler
+        </p>
+      </Modal>
 
       <contenteditable
         v-model="currentTicket.title"
@@ -89,6 +111,7 @@ import { mapState } from "vuex";
 import { setTicketDocument, deleteTicketDocument } from '../utils/firestore';
 import contenteditable from 'vue-contenteditable';
 import { Icon } from '@iconify/vue';
+import Modal from '../components/Modal.vue';
 import moment from 'moment';
 import { TICKET_STATES } from "../utils/ticketStates";
 
@@ -96,14 +119,15 @@ export default {
   name: 'TicketList',
   components: {
     contenteditable,
-    Icon
+    Icon,
+    Modal
   },
   data: () => ({
     routePath: '',
     blockFirstEdit: false,
     ticketStates: TICKET_STATES,
-    showHintSaveSlug: false,
-    slugCurrentTicket: ''
+    slugCurrentTicket: '',
+    showEditSlugModal: false
   }),
   computed: {
     ...mapState(['tickets', 'connectedUser', 'selectedSpace']),
@@ -163,12 +187,16 @@ export default {
       this.updateTicket();
     },
     editSlug() {
-      this.showHintSaveSlug = false;
+      this.showEditSlugModal = false;
       const copiedCurrentTicket = Object.assign({}, this.currentTicket);
       copiedCurrentTicket.slug = this.slugCurrentTicket;
       copiedCurrentTicket.updateDate = new Date();
       setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, copiedCurrentTicket);
       this.$router.push('/tickets/' + this.slugCurrentTicket);
+    },
+    closeEditSlugModal(){
+      this.slugCurrentTicket = this.currentTicket.slug;
+      this.showEditSlugModal = false;
     }
   }
 };
