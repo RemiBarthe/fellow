@@ -29,7 +29,7 @@
         <input
           v-model="slugCurrentTicket"
           type="text"
-          class="text-base w-full border-2 border-primary rounded px-2.5 py-1"
+          class="text-base w-full border-2 border-primary rounded-xl px-2.5 py-1"
           @keyup.enter.prevent="editSlug()"
           @keyup.esc="closeEditSlugModal()"
         >
@@ -149,7 +149,6 @@ export default {
     }
   },
   mounted(){
-    
     this.routePath = this.$route.path;
     setTimeout(() => {
       if(!this.currentTicket){
