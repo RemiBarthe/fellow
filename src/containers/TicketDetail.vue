@@ -86,7 +86,7 @@ export default {
   },
   data: () => ({
     routePath: '',
-    blockFirstEdit: true,
+    blockFirstEdit: false,
     ticketStates: TICKET_STATES
   }),
   computed: {
@@ -106,6 +106,9 @@ export default {
     }
   },
   mounted(){
+    if(this.currentTicket.content){
+      this.blockFirstEdit = true;
+    }
     this.routePath = this.$route.path;
     setTimeout(() => {
       if(!this.currentTicket){
@@ -116,7 +119,7 @@ export default {
   methods: {
     updateTicket: _.debounce(function() {
       // blockFirstEdit cause QuillEditor trigger textChange when populating itself
-      if(!this.blockFirstEdit || !this.currentTicket.content){
+      if(!this.blockFirstEdit){
         this.currentTicket.updateDate = new Date();
         setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
       }
