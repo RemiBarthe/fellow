@@ -94,6 +94,8 @@
       @textChange="updateTicket"
     />
 
+    <TodoList />
+
     <button
       class="px-2.5 py-1 rounded text-thirdary text-title float-right
       hover:bg-thirdary hover:bg-opacity-20 transition-colors duration-200 mt-4 mb-4 tooltip tooltip-bottom"
@@ -114,13 +116,15 @@ import { Icon } from '@iconify/vue';
 import Modal from '../components/Modal.vue';
 import moment from 'moment';
 import { TICKET_STATES } from "../utils/ticketStates";
+import TodoList from "../components/TodoList.vue";
 
 export default {
   name: 'TicketList',
   components: {
     contenteditable,
     Icon,
-    Modal
+    Modal,
+    TodoList
   },
   data: () => ({
     routePath: '',
