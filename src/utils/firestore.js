@@ -59,7 +59,7 @@ export const setTicketDocument = (userId, spaceId, ticket) => {
     'spaces',
     spaceId,
     'tickets',
-    ticket.slug
+    ticket.id
   );
   return setDoc(ticketsRef, ticket, { merge: true });
 };
@@ -72,7 +72,7 @@ export const deleteTicketDocument = (userId, spaceId, ticket) => {
     'spaces',
     spaceId,
     'tickets',
-    ticket.slug
+    ticket.id
   );
   return deleteDoc(ticketsRef, ticket, { merge: true });
 };

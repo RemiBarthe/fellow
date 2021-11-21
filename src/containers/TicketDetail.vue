@@ -10,15 +10,29 @@
 
   <template v-if="currentTicket">
     <h2
-      class="font-bold text-title mb-5 flex flex-wrap items-center"
+      class="font-bold text-title mb-5 flex flex-wrap items-center relative"
     >
       <contenteditable
-        v-model="currentTicket.slug"
+        v-model="slugCurrentTicket"
         tag="span"
         :class="`px-2.5 py-1 rounded font-bold text-base leading-4 ${radioTabStyle}`"
         :no-n-l="true"
         :no-h-t-m-l="true"
+        @keyup.enter.prevent="editSlug()"
+        @focus="showHintSaveSlug = true"
+        @blur="showHintSaveSlug = false"
       />
+
+      <p
+        v-if="showHintSaveSlug"
+        class="flex absolute justify-end left-1 -bottom-2 font-bold text-sm"
+      >
+        <Icon
+          icon="fluent:arrow-enter-left-24-filled"
+          class="mr-1 mt-1"
+        />
+        Valider
+      </p>
 
       <contenteditable
         v-model="currentTicket.title"
@@ -60,7 +74,7 @@
 
     <button
       class="px-2.5 py-1 rounded text-thirdary text-title float-right
-      hover:bg-thirdary hover:bg-opacity-20 transition-colors duration-200 mt-4 tooltip tooltip-bottom"
+      hover:bg-thirdary hover:bg-opacity-20 transition-colors duration-200 mt-4 mb-4 tooltip tooltip-bottom"
       data-title="Supprimer le ticket"
       @click="deleteTicket"
     >
@@ -87,7 +101,9 @@ export default {
   data: () => ({
     routePath: '',
     blockFirstEdit: false,
-    ticketStates: TICKET_STATES
+    ticketStates: TICKET_STATES,
+    showHintSaveSlug: false,
+    slugCurrentTicket: ''
   }),
   computed: {
     ...mapState(['tickets', 'connectedUser', 'selectedSpace']),
@@ -95,7 +111,10 @@ export default {
       return this.tickets.find(ticket => ticket.slug === this.$route.params.slug);
     },
     radioTabStyle(){
-      return this.ticketStates.find(state => state.key === this.currentTicket.state).style;
+      if(this.currentTicket)
+        return this.ticketStates.find(state => state.key === this.currentTicket.state).style;
+      
+      return '';
     }
   },
   watch: {
@@ -106,13 +125,19 @@ export default {
     }
   },
   mounted(){
-    if(this.currentTicket.content){
-      this.blockFirstEdit = true;
-    }
+    
     this.routePath = this.$route.path;
     setTimeout(() => {
       if(!this.currentTicket){
         this.$router.push('/404');
+      }
+
+      else{
+        this.slugCurrentTicket = this.currentTicket.slug;
+
+        if(this.currentTicket.content){
+          this.blockFirstEdit = true;
+        }
       }
     }, 200);
   },
@@ -136,6 +161,14 @@ export default {
     updateTicketState(state){
       this.currentTicket.state = state;
       this.updateTicket();
+    },
+    editSlug() {
+      this.showHintSaveSlug = false;
+      const copiedCurrentTicket = Object.assign({}, this.currentTicket);
+      copiedCurrentTicket.slug = this.slugCurrentTicket;
+      copiedCurrentTicket.updateDate = new Date();
+      setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, copiedCurrentTicket);
+      this.$router.push('/tickets/' + this.slugCurrentTicket);
     }
   }
 };
