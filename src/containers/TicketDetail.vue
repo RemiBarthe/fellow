@@ -1,7 +1,7 @@
 <template>
   <button
     class="px-2.5 py-1 rounded text-black text-title md:text-base-lg 
-    hover:bg-gray transition-colors duration-200 tooltip tooltip-top"
+    hover:bg-gray transition-colors duration-200 ease-in-out tooltip tooltip-top"
     data-title="Retour aux tickets"
     @click="$router.push('/tickets')"
   >
@@ -98,7 +98,7 @@
 
     <button
       class="px-2.5 py-1 rounded text-thirdary text-title float-right
-      hover:bg-thirdary hover:bg-opacity-20 transition-colors duration-200 mt-4 mb-4 tooltip tooltip-bottom"
+      hover:bg-thirdary hover:bg-opacity-20 transition-colors duration-200 ease-in-out mt-4 mb-4 tooltip tooltip-bottom"
       data-title="Supprimer le ticket"
       @click="deleteTicket"
     >
