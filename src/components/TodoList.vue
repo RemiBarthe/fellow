@@ -106,6 +106,7 @@ export default {
     },
     saveTodoItem() {
       this.currentTicket.updateDate = new Date();
+      this.currentTicket.todoListDonePercentage = this.donePercentage;
       setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
     },
     removeTodoItem(id) {
