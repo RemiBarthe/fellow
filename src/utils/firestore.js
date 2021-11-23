@@ -47,7 +47,9 @@ export const addTicketDocument = (userId, spaceId, slug) => {
     creationDate: new Date(),
     updateDate: new Date(),
     content: '',
-    state: 'todo'
+    state: 'todo',
+    todoList: [],
+    todoListDonePercentage: 0
   }, { merge: true });
 };
 
@@ -59,7 +61,7 @@ export const setTicketDocument = (userId, spaceId, ticket) => {
     'spaces',
     spaceId,
     'tickets',
-    ticket.slug
+    ticket.id
   );
   return setDoc(ticketsRef, ticket, { merge: true });
 };
@@ -72,7 +74,7 @@ export const deleteTicketDocument = (userId, spaceId, ticket) => {
     'spaces',
     spaceId,
     'tickets',
-    ticket.slug
+    ticket.id
   );
   return deleteDoc(ticketsRef, ticket, { merge: true });
 };

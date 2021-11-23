@@ -3,7 +3,7 @@
     {{ selectedSpace.title }}
   </h2>
 
-  <div class="flex gap-5 mb-2.5">
+  <div class="flex flex-wrap gap-5 mb-2.5">
     <button
       v-for="state in ticketStates"
       :key="state.key"
@@ -33,7 +33,7 @@
     <div
       v-for="ticket in filteredTickets"
       :key="ticket.slug"
-      class="rounded p-5 max-w-xs h-full cursor-pointer flex flex-col justify-between"
+      class="relative overflow-hidden rounded p-5 max-w-xs h-full cursor-pointer flex flex-col justify-between"
       :class="[
         styleTicketState(ticket.state)
       ]"
@@ -42,10 +42,16 @@
       <p class="text-right mb-4">
         {{ formatDate(ticket.creationDate) }}
       </p>
+
       <p class="leading-4">
         <span class="text-xs font-bold">{{ ticket.slug }}</span>
         <br>{{ ticket.title }}
       </p>
+
+      <div
+        class="absolute bottom-0 left-0 h-2 bg-white bg-opacity-20"
+        :style="`width:${ticket.todoListDonePercentage}%`"
+      />
     </div>
   </div>
 </template>
