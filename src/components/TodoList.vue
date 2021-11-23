@@ -1,7 +1,10 @@
 <template>
   <div class="flex flex-col gap-2.5 mt-2.5 bg-white p-5 rounded">
     <div class="w-full h-1.5 bg-gray rounded">
-      <div class="w-1/3 h-full bg-primary rounded" />
+      <div
+        class="h-full bg-primary rounded transition-all duration-500 ease-in-out"
+        :style="`width:${donePercentage}%`"
+      />
     </div>
 
     <div
@@ -74,12 +77,18 @@ export default {
     currentTicket() {
       return this.tickets.find(ticket => ticket.slug === this.$route.params.slug);
     },
+    currentTodoList() {
+      return this.currentTicket.todoList;
+    },
+    donePercentage() {
+      return this.currentTodoList.filter(item => item.isDone).length * 100 / this.currentTodoList.length;
+    }
   },
   methods: {
     addNewTodoItem() {
       const trimedContent = this.todoItemContent.trim();
       if(trimedContent){
-        this.currentTicket.todoList.push({ id: Date.now(), content: trimedContent, isDone: false });
+        this.currentTodoList.push({ id: Date.now(), content: trimedContent, isDone: false });
         this.saveTodoItem();
       }
       this.closeTodoItemInput();
@@ -100,7 +109,7 @@ export default {
       setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
     },
     removeTodoItem(id) {
-      this.currentTicket.todoList = this.currentTicket.todoList.filter(item => item.id !== id);
+      this.currentTicket.todoList = this.currentTodoList.filter(item => item.id !== id);
       this.saveTodoItem();
     }
   }
