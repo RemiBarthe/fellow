@@ -7,7 +7,7 @@
     <div
       v-for="(todoItem, key) in currentTicket.todoList"
       :key="key"
-      class="flex max-w-full justify-between items-center text-base"
+      class="todo-item flex max-w-full justify-between items-center text-base"
     >
       <p
         :class="{'text-primary line-through': todoItem.isDone}"
@@ -22,7 +22,7 @@
 
       <Icon
         icon="heroicons-solid:x"
-        class="cursor-pointer hover:text-thirdary transition-colors duration-200 ease-in-out"
+        class="icon-item cursor-pointer flex-shrink-0 hover:text-thirdary transition-colors duration-200 ease-in-out opacity-0"
         @click="removeTodoItem(todoItem.id)"
       /> 
     </div>
@@ -88,7 +88,7 @@ export default {
       this.todoItemContent = "";
       this.todoItemInputVisible = false;
     },
-    showTodoItemInput(){
+    showTodoItemInput() {
       this.todoItemInputVisible = true;
 
       setTimeout(() => {
@@ -107,4 +107,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.todo-item:hover{
+  p {
+    color: theme('colors.primary');
+  }
+  .icon-item{
+    opacity: 1;
+  }
+}
+</style>

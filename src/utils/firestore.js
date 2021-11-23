@@ -48,7 +48,8 @@ export const addTicketDocument = (userId, spaceId, slug) => {
     updateDate: new Date(),
     content: '',
     state: 'todo',
-    todoList: []
+    todoList: [],
+    todoListDonePercent: 0
   }, { merge: true });
 };
 
