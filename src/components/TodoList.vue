@@ -4,17 +4,28 @@
       <div class="w-1/3 h-full bg-primary rounded" />
     </div>
 
-    <p
+    <div
       v-for="(todoItem, key) in currentTicket.todoList"
       :key="key"
-      :class="{'text-primary line-through': todoItem.isDone}"
+      class="flex max-w-full justify-between items-center text-base"
     >
-      <button
-        class="w-4 h-4 border-2 border-primary rounded-md mr-2.5 transition-colors duration-200 ease-in-out"
-        :class="{'bg-primary': todoItem.isDone}"
-        @click="todoItem.isDone = !todoItem.isDone; saveTodoItem()"
-      /> {{ todoItem.content }}
-    </p>
+      <p
+        :class="{'text-primary line-through': todoItem.isDone}"
+      >
+        <button
+          class="w-4 h-4 border-2 border-primary rounded-md mr-2.5 transition-colors duration-200 ease-in-out"
+          :class="{'bg-primary': todoItem.isDone}"
+          @click="todoItem.isDone = !todoItem.isDone; saveTodoItem()"
+        /> 
+        {{ todoItem.content }}
+      </p>
+
+      <Icon
+        icon="heroicons-solid:x"
+        class="cursor-pointer hover:text-thirdary transition-colors duration-200 ease-in-out"
+        @click="removeTodoItem(todoItem.id)"
+      /> 
+    </div>
 
     <input
       v-if="todoItemInputVisible"
@@ -40,9 +51,13 @@
 <script>
 import { mapState } from "vuex";
 import { setTicketDocument } from '../utils/firestore';
+import { Icon } from '@iconify/vue';
 
 export default {
   name: 'TodoList',
+  components: {
+    Icon
+  },
   props: {
     short: {
       type: Boolean,
@@ -52,10 +67,6 @@ export default {
   },
   data: () => ({
     todoItemInputVisible: false,
-    newTodoItem: {
-      content: '',
-      isDone: false
-    },
     todoItemContent: ""
   }),
   computed: {
@@ -68,7 +79,7 @@ export default {
     addNewTodoItem() {
       const trimedContent = this.todoItemContent.trim();
       if(trimedContent){
-        this.currentTicket.todoList.push({ content: trimedContent, isDone: false });
+        this.currentTicket.todoList.push({ id: Date.now(), content: trimedContent, isDone: false });
         this.saveTodoItem();
       }
       this.closeTodoItemInput();
@@ -84,9 +95,13 @@ export default {
         this.$refs.todoItemInput.focus();
       }, 50);
     },
-    saveTodoItem(){
+    saveTodoItem() {
       this.currentTicket.updateDate = new Date();
       setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
+    },
+    removeTodoItem(id) {
+      this.currentTicket.todoList = this.currentTicket.todoList.filter(item => item.id !== id);
+      this.saveTodoItem();
     }
   }
 };

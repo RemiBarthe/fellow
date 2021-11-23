@@ -76,7 +76,7 @@
         <button
           v-for="state in ticketStates"
           :key="state.key"
-          class="px-2.5 py-1 rounded "
+          class="px-2.5 py-1 rounded"
           :class="[state.key === currentTicket.state ? 'bg-white text-black font-bold' : 'hover:bg-white hover:bg-opacity-20' ]"
           @click="updateTicketState(state.key)"
         >
