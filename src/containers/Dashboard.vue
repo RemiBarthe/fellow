@@ -3,24 +3,26 @@
     {{ selectedSpace.title }}
   </h2>
 
-  <div class="grid gap-2.5 grid-flow-row lg:grid-flow-col">
-    <TicketCardList
-      :state="ticketStates[1]"
-      :tickets="inprogressTickets"
-    />
+  <div class="flex gap-2.5 flex-col lg:flex-row">
+    <div class="flex gap-2.5 flex-col flex-shrink-0">
+      <TicketCardList
+        :state="ticketStates[1]"
+        :tickets="inprogressTickets"
+      />
 
-    <TicketCardList
-      :state="ticketStates[0]"
-      :tickets="todoTickets"
-    />
+      <TicketCardList
+        :state="ticketStates[0]"
+        :tickets="todoTickets"
+      />
 
-    <div class="flex items-start justify-center lg:justify-end">
-      <Button
-        class="bg-black text-white hover:bg-opacity-85"
-        @click="$router.push('/tickets')"
-      >
-        Voir tous les tickets
-      </Button>
+      <div class="flex items-start justify-center lg:justify-end">
+        <Button
+          class="bg-black text-white hover:bg-opacity-85"
+          @click="$router.push('/tickets')"
+        >
+          Voir tous les tickets
+        </Button>
+      </div>
     </div>
 
     <div class="bg-white p-5 rounded row-span-3">
