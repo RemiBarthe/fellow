@@ -13,7 +13,7 @@
       class="font-bold text-title mb-5 flex flex-wrap items-center relative"
     >
       <span
-        :class="`px-2.5 py-1 rounded font-bold text-base leading-4 tooltip tooltip-bottom cursor-pointer ${radioTabStyle}`"
+        :class="`px-2.5 py-1 rounded font-bold text-base leading-4 tooltip tooltip-bottom cursor-pointer transition-colors delay-100 duration-700 ease-in-out ${radioTabStyle}`"
         data-title="Modifier le slug"
         @click="showEditSlugModal = true"
       >{{ currentTicket.slug }}</span>
@@ -72,7 +72,7 @@
         <br> Dernière édition {{ formatDate(currentTicket.updateDate) }}
       </p>
 
-      <div :class="`text-sm md:text-base w-fit p-1 rounded flex gap-1 ${radioTabStyle}`">
+      <div :class="`text-sm md:text-base w-fit p-1 rounded flex gap-1 transition-colors delay-100 duration-700 ease-in-out ${radioTabStyle}`">
         <button
           v-for="state in ticketStates"
           :key="state.key"
