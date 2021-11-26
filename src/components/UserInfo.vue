@@ -23,7 +23,7 @@
           @error="defaultProfilePicture"
         >
 
-        <p class="text-center text-base-lg font-bold leading-4">
+        <p class="text-center text-base font-bold leading-3">
           {{ connectedUser.displayName }}
           <br><span class="text-gray text-sm font-normal">{{ connectedUser.email }}</span>
         </p>
