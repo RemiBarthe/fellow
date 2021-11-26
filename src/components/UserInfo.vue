@@ -100,7 +100,7 @@ export default {
         });
     },
     defaultProfilePicture(event) {
-      event.target.src = require('../assets/images/default-profile-picture.png');
+      event.target.src = require('../assets/images/default-profile-picture.svg');
     }
   }
 };
