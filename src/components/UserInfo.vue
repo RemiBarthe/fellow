@@ -1,44 +1,69 @@
 <template>
   <div
-    class="flex flex-col items-start p-5 rounded hover:bg-white cursor-pointer"
-    :class="{ 'bg-white': showSettings }"
-    @click.self="showSettings = !showSettings"
+    class="flex flex-col items-start p-5 rounded"
   >
-    <div
-      class="flex items-center"
+    <img
+      :alt="`${connectedUser.displayName} profile picture`"
+      :src="connectedUser.photoUrl"
+      class="w-10 h-10 rounded-full cursor-pointer"
+      @error="defaultProfilePicture"
       @click="showSettings = !showSettings"
     >
-      <p class="mr-2.5 hidden md:inline">
-        {{ connectedUser.displayName }}
-      </p>
-      <img
-        :alt="`${connectedUser.displayName} profile picture`"
-        :src="connectedUser.photoUrl"
-        class="w-10 h-10 rounded-full"
-        @error="defaultProfilePicture"
-      >
-    </div>
 
-    <div v-if="showSettings">
-      <button class="mt-4 flex items-center text-gray hover:text-black">
-        <Icon
-          icon="ci:settings-filled"
-          class="mr-2"
-        />
-        Paramètres
-      </button>
+    <Modal
+      v-if="showSettings"
+      :custom-class="'absolute right-5 top-10'"
+      @closeModal="showSettings = false"
+    >
+      <div class="flex flex-col gap-3 items-center">
+        <img
+          :alt="`${connectedUser.displayName} profile picture`"
+          :src="connectedUser.photoUrl"
+          class="w-10 h-10 rounded-full"
+          @error="defaultProfilePicture"
+        >
 
-      <button
-        class="mt-2 flex items-center text-gray hover:text-black"
-        @click="signOutUser"
-      >
-        <Icon
-          icon="fa-solid:sign-out-alt"
-          class="mr-2"
-        />
-        Se déconnecter
-      </button>
-    </div>
+        <p class="text-center text-base font-bold leading-3">
+          {{ connectedUser.displayName }}
+          <br><span class="text-gray text-sm font-normal">{{ connectedUser.email }}</span>
+        </p>
+
+        <div class="flex flex-col gap-1">
+          <button
+            class="flex items-center text-gray hover:text-black"
+            @click="$router.push('/tickets'); showSettings = !showSettings"
+          >
+            <Icon
+              icon="fluent:ticket-diagonal-16-filled"
+              class="mr-2"
+            />
+            Mes tickets
+          </button>
+      
+          <button
+            class="flex items-center text-gray hover:text-black"
+            @click="$router.push('/settings'); showSettings = !showSettings"
+          >
+            <Icon
+              icon="ci:settings-filled"
+              class="mr-2"
+            />
+            Paramètres
+          </button>
+
+          <button
+            class="flex items-center text-thirdary hover:text-black"
+            @click="signOutUser"
+          >
+            <Icon
+              icon="fa-solid:sign-out-alt"
+              class="mr-2"
+            />
+            Se déconnecter
+          </button>
+        </div>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -46,11 +71,13 @@
 import { getAuth, signOut } from 'firebase/auth';
 import { mapState } from 'vuex';
 import { Icon } from '@iconify/vue';
+import Modal from "./Modal.vue";
 
 export default {
   name: 'UserInfo',
   components: {
-    Icon
+    Icon,
+    Modal
   },
   data: () => ({
     showSettings: false
@@ -73,7 +100,7 @@ export default {
         });
     },
     defaultProfilePicture(event) {
-      event.target.src = require('../assets/images/default-profile-picture.png');
+      event.target.src = require('../assets/images/default-profile-picture.svg');
     }
   }
 };
