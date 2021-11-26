@@ -37,6 +37,7 @@
 
     <Modal
       v-if="showSpacesModal"
+      :custom-class="'pb-15'"
       @closeModal="showSpacesModal = false"
     >
       <h2 class="text-title font-bold mb-5">
