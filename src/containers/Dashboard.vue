@@ -4,7 +4,7 @@
   </h2>
 
   <div class="flex gap-2.5 flex-col lg:flex-row">
-    <div class="flex gap-2.5 flex-col flex-shrink-0">
+    <div class="flex gap-2.5 flex-col flex-1 lg:max-w-max">
       <TicketCardList
         :state="ticketStates[1]"
         :tickets="inprogressTickets"
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div class="bg-white p-5 rounded row-span-3">
+    <div class="bg-white p-5 rounded flex-1">
       <p class="font-bold pb-2">
         Statistiques
       </p>
