@@ -1,0 +1,27 @@
+.bg-blob-1 {
+    background-image: url('../images/blob-login-turquoise.svg'),
+      url('../images/blob-login-blue.svg'),
+      url('../images/blob-login-red.svg');
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: bottom left, top left, top right -20%;
+    background-size: calc(max(42%, 500px));
+   
+  }
+.bg-blob-2 {
+    background-image: url('../images/blob-login-turquoise.svg'),
+      url('../images/blob-login-blue.svg'),
+      url('../images/blob-login-red.svg');
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: bottom left, top left, top right -20%;
+    background-size: calc(max(42%, 500px));
+   
+  }
+.bg-blob-3 {
+    background-image: url('../images/blob-login-turquoise.svg'),
+      url('../images/blob-login-blue.svg'),
+      url('../images/blob-login-red.svg');
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: bottom left, top left, top right -20%;
+    background-size: calc(max(42%, 500px));
+   
+  }

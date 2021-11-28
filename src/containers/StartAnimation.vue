@@ -42,6 +42,6 @@ export default {
 
 <style scoped>
 .h1 {
-  transition-duration: 1s;
+  transition-duration: 2s;
 }
 </style>
