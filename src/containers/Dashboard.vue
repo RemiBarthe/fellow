@@ -1,23 +1,31 @@
 <template>
-  <h2 class="font-bold text-title mb-8 ">
+  <h2 class="font-bold text-title mb-5">
     {{ selectedSpace.title }}
   </h2>
 
-  <div class="grid gap-2.5 grid-flow-row lg:grid-flow-col">
-    <TicketCardList status="en cours" />
+  <div class="flex gap-2.5 flex-col lg:flex-row">
+    <div class="flex gap-2.5 flex-col flex-1 lg:max-w-max">
+      <TicketCardList
+        :state="ticketStates[1]"
+        :tickets="inprogressTickets"
+      />
 
-    <TicketCardList status="à faire" />
+      <TicketCardList
+        :state="ticketStates[0]"
+        :tickets="todoTickets"
+      />
 
-    <div class="flex items-start justify-center lg:justify-end">
-      <Button
-        class="bg-black text-white hover:bg-opacity-85"
-        @click="$router.push('/tickets')"
-      >
-        Voir tous les tickets
-      </Button>
+      <div class="flex items-start justify-center lg:justify-end">
+        <Button
+          class="bg-black text-white hover:bg-opacity-85"
+          @click="$router.push('/tickets')"
+        >
+          Voir tous les tickets
+        </Button>
+      </div>
     </div>
 
-    <div class="bg-white p-5 rounded row-span-3">
+    <div class="bg-white p-5 rounded flex-1">
       <p class="font-bold pb-2">
         Statistiques
       </p>
@@ -46,6 +54,7 @@
 import { mapState } from 'vuex';
 import Button from '../components/Button.vue';
 import TicketCardList from '../components/TicketCardList.vue';
+import { TICKET_STATES } from "../utils/ticketStates";
 
 export default {
   name: 'Dashboard',
@@ -53,9 +62,17 @@ export default {
     Button,
     TicketCardList
   },
-  data: () => ({}),
+  data: () => ({
+    ticketStates: TICKET_STATES
+  }),
   computed: {
-    ...mapState(['selectedSpace'])
+    ...mapState(['selectedSpace', 'tickets']),
+    inprogressTickets(){
+      return this.tickets.filter(ticket => ticket.state === this.ticketStates[1].key);
+    },
+    todoTickets(){
+      return this.tickets.filter(ticket => ticket.state === this.ticketStates[0].key);
+    }
   }
 };
 </script>

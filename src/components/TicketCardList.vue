@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white p-5 rounded flex flex-col justify-between">
     <p class="font-bold pb-2">
-      Tickets {{ status }}
+      Tickets {{ state.label.toLowerCase() }}
     </p>
 
     <div
@@ -9,19 +9,19 @@
       class="grid grid-cols-1 gap-2 h-full auto-rows-max"
     >
       <div
-        v-for="(ticket, key) in tickets"
+        v-for="(ticket, key) in filteredTicketsList"
         :key="key"
         class="cursor-pointer truncate"
         @click="$router.push(`/tickets/${ticket.slug}`)"
       >
-        <span class="bg-primary text-white px-2.5 py-1 rounded font-bold text-sm">{{ ticket.slug }}</span> 
+        <span :class="`px-2.5 py-1 rounded font-bold text-xs ${state.style}`">{{ ticket.slug }}</span> 
         {{ ticket.title }}
       </div>
     </div>
 
     <template v-else>
       <p class="text-gray text-center pb-2">
-        Vous n’avez aucun ticket {{ status }}
+        Vous n’avez aucun ticket {{ state.label.toLowerCase() }}
       </p>
 
       <Button
@@ -37,7 +37,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import Button from '../components/Button.vue';
-import { incrementTicketsNumber, setTicketDocument } from '../utils/firestore';
+import { incrementTicketsNumber, addTicketDocument } from '../utils/firestore';
 
 export default {
   name: 'TicketCardList',
@@ -45,14 +45,21 @@ export default {
     Button
   },
   props: {
-    status: {
-      type: String,
+    state: {
+      type: Object,
       default: null
+    },
+    tickets: {
+      type: Array,
+      required: true
     }
   },
   data: () => ({}),
   computed: {
-    ...mapState(['connectedUser', 'selectedSpace', 'spaces', 'tickets'])
+    ...mapState(['connectedUser', 'selectedSpace', 'spaces']),
+    filteredTicketsList(){
+      return _.take(this.tickets, 6);
+    }
   },
   methods: {
     ...mapActions(['setSelectedSpace']),
@@ -61,7 +68,7 @@ export default {
 
       const formattedTitle = this.selectedSpace.title.replace(/\s/g, "").toUpperCase().substring(0, 4);
       const slug = `${formattedTitle}-${this.selectedSpace.ticketsNumber}`;
-      await setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, slug);
+      await addTicketDocument(this.connectedUser.uid, this.selectedSpace.id, slug);
 
       this.$router.push(`/tickets/${slug}`);
     },

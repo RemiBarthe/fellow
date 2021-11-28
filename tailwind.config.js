@@ -16,7 +16,6 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-
       black: colors.black,
       white: colors.white,
       red: colors.red,
@@ -30,7 +29,7 @@ module.exports = {
       secondary: '#59C3C3',
       thirdary: '#F45B69',
       'light-gray': '#F1F1F1',
-      gray: '#CACACA'
+      gray: '#B0B0B0'
     },
     spacing: {
       px: '1px',

@@ -1,6 +1,6 @@
 <template>
-  <section class="flex min-h-screen bg-light-gray bg-blob-global-3">
-    <UserInfo class="fixed right-5 top-5" />
+  <section class="flex min-h-screen bg-light-gray">
+    <UserInfo class="absolute right-5 top-5" />
 
     <NavBar />
 

@@ -7,6 +7,7 @@ import { QuillEditor } from '@vueup/vue-quill';
 import './registerServiceWorker';
 import './firebase';
 import './assets/css/tailwind.css';
+import './assets/css/global.scss';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 
 createApp(App)

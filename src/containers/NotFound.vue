@@ -1,12 +1,12 @@
 <template>
   <h2 class="font-bold text-title mb-5">
-    Paramètres
+    404
   </h2>
 </template>
 
 <script>
 export default {
-  name: 'Settings',
+  name: 'NotFound',
   components: {},
   data: () => ({})
 };
