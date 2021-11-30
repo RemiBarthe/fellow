@@ -63,7 +63,6 @@ import { incrementTicketsNumber, addTicketDocument } from '../utils/firestore';
 import moment from 'moment';
 import { TICKET_STATES } from "../utils/ticketStates";
 
-
 export default {
   name: 'TicketList',
   components: {
