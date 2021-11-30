@@ -6,6 +6,15 @@ export const setUserDocument = (user) => {
   setDoc(userRef, user, { merge: true });
 };
 
+export const deleteUserDocument = (user) => {
+  const userRef = doc(
+    db,
+    'users',
+    user.uid
+  );
+  return deleteDoc(userRef);
+};
+
 export const addSpaceDocument = (userId, title) => {
   const spacesRef = collection(
     db,
@@ -13,7 +22,6 @@ export const addSpaceDocument = (userId, title) => {
     userId,
     'spaces'
   );
-
   addDoc(spacesRef, {
     title: title,
     ticketsNumber: 0
@@ -32,7 +40,7 @@ export const incrementTicketsNumber = (userId, spaceId) => {
 };
 
 export const addTicketDocument = (userId, spaceId, slug) => {
-  const ticketsRef = doc(
+  const ticketRef = doc(
     db,
     'users',
     userId,
@@ -41,7 +49,7 @@ export const addTicketDocument = (userId, spaceId, slug) => {
     'tickets',
     slug
   );
-  return setDoc(ticketsRef, { 
+  return setDoc(ticketRef, { 
     slug, 
     title: `Titre temporaire ${slug}`, 
     creationDate: new Date(),
@@ -54,7 +62,7 @@ export const addTicketDocument = (userId, spaceId, slug) => {
 };
 
 export const setTicketDocument = (userId, spaceId, ticket) => {
-  const ticketsRef = doc(
+  const ticketRef = doc(
     db,
     'users',
     userId,
@@ -63,11 +71,11 @@ export const setTicketDocument = (userId, spaceId, ticket) => {
     'tickets',
     ticket.id
   );
-  return setDoc(ticketsRef, ticket, { merge: true });
+  return setDoc(ticketRef, ticket, { merge: true });
 };
 
 export const deleteTicketDocument = (userId, spaceId, ticket) => {
-  const ticketsRef = doc(
+  const ticketRef = doc(
     db,
     'users',
     userId,
@@ -76,5 +84,27 @@ export const deleteTicketDocument = (userId, spaceId, ticket) => {
     'tickets',
     ticket.id
   );
-  return deleteDoc(ticketsRef, ticket, { merge: true });
+  return deleteDoc(ticketRef);
+};
+
+export const deleteSpaceDocument = (userId, space) => {
+  const SpaceRef = doc(
+    db,
+    'users',
+    userId,
+    'spaces',
+    space.id
+  );
+  return deleteDoc(SpaceRef);
+};
+
+export const setSpaceDocument = (userId, space) => {
+  const SpaceRef = doc(
+    db,
+    'users',
+    userId,
+    'spaces',
+    space.id
+  );
+  return setDoc(SpaceRef, space, { merge: true });
 };

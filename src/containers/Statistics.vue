@@ -2,6 +2,7 @@
   <h2 class="font-bold text-title mb-5">
     Statistiques
   </h2>
+  <p>Disponible prochainement</p>
 </template>
 
 <script>
