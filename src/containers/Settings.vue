@@ -73,6 +73,24 @@
       <h2 class="text-title font-bold mb-5">
         Suppression de l'espace
       </h2>
+
+      <p class="mb-5">
+        <span class="font-bold text-thirdary">Attention : </span> cette action est irréversible.
+        <br> Êtes-vous sur de vouloir <span class="font-bold">supprimer</span> votre espace <span class="font-bold">{{ selectedSpace.title }}</span> définitivement ?
+      </p>
+
+      <div class="flex justify-end gap-1">
+        <Button
+          class="bg-black bg-opacity-0 hover:bg-opacity-20 transition-colors duration-200"
+          @click="showModal=false"
+        >
+          Annuler
+        </Button>
+
+        <Button class="bg-thirdary text-white hover:bg-opacity-90 transition-colors duration-200">
+          Supprimer définitivement
+        </Button>
+      </div>
     </template>
 
     <template v-if="modalScope === DELETE_ACCOUNT">
@@ -92,8 +110,9 @@
         >
           Annuler
         </Button>
+        
         <Button class="bg-thirdary text-white hover:bg-opacity-90 transition-colors duration-200">
-          Supprimer définitivement
+          Supprimer mon compte définitivement
         </Button>
       </div>
     </template>
