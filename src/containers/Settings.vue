@@ -85,7 +85,10 @@
           Annuler
         </Button>
 
-        <Button class="bg-primary text-white hover:bg-opacity-90 transition-colors duration-200">
+        <Button
+          class="bg-primary text-white hover:bg-opacity-90 transition-colors duration-200"
+          @click="editSpace()"
+        >
           Valider la modification
         </Button>
       </div>
@@ -109,7 +112,10 @@
           Annuler
         </Button>
 
-        <Button class="bg-thirdary text-white hover:bg-opacity-90 transition-colors duration-200">
+        <Button
+          class="bg-thirdary text-white hover:bg-opacity-90 transition-colors duration-200"
+          @click="deleteSpace()"
+        >
           Supprimer définitivement
         </Button>
       </div>
@@ -133,7 +139,10 @@
           Annuler
         </Button>
 
-        <Button class="bg-thirdary text-white hover:bg-opacity-90 transition-colors duration-200">
+        <Button
+          class="bg-thirdary text-white hover:bg-opacity-90 transition-colors duration-200"
+          @click="deleteUserAccount()"
+        >
           Supprimer mon compte définitivement
         </Button>
       </div>
@@ -142,11 +151,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { Icon } from '@iconify/vue';
 import { getAuth, signOut } from 'firebase/auth';
 import Modal from '../components/Modal.vue';
 import Button from '../components/Button.vue';
+import { deleteSpaceDocument, setSpaceDocument, deleteUserDocument } from '../utils/firestore';
 
 export default {
   name: 'Settings',
@@ -167,6 +177,7 @@ export default {
     ...mapState(['spaces', 'connectedUser', 'unsubscribeTickets', 'unsubscribeSpaces'])
   },
   methods: {
+    ...mapActions(['setStateToDefault']),
     signOutUser() {
       this.unsubscribeSpaces();
       this.unsubscribeTickets();
@@ -180,11 +191,23 @@ export default {
           console.log(error);
         });
     },
-    showModalScope(scope, space = null){
+    showModalScope(scope, space = null) {
       this.showModal = true;
       this.modalScope = scope;
 
       this.selectedSpace = space ? Object.assign({}, space) : '';
+    },
+    deleteSpace() {
+      deleteSpaceDocument(this.connectedUser.uid, this.selectedSpace);
+      this.showModal = false;
+    },
+    editSpace() {
+      setSpaceDocument(this.connectedUser.uid, this.selectedSpace);
+      this.showModal = false;
+    },
+    deleteUserAccount() {
+      deleteUserDocument(this.connectedUser);
+      this.setStateToDefault();
     }
   }
 };
