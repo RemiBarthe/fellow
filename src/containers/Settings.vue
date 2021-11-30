@@ -67,6 +67,28 @@
       <h2 class="text-title font-bold mb-5">
         Modification de l'espace
       </h2>
+
+      <input
+        v-model="selectedSpace.title"
+        placeholder="Titre de l'espace"
+        type="text"
+        class="text-base w-full border-2 border-primary rounded-xl px-2.5 py-1 mb-5"
+        @keyup.enter.prevent="editSlug()"
+        @keyup.esc="closeEditSlugModal()"
+      >
+
+      <div class="flex justify-end gap-1">
+        <Button
+          class="bg-black bg-opacity-0 hover:bg-opacity-20 transition-colors duration-200"
+          @click="showModal=false"
+        >
+          Annuler
+        </Button>
+
+        <Button class="bg-primary text-white hover:bg-opacity-90 transition-colors duration-200">
+          Valider la modification
+        </Button>
+      </div>
     </template>
 
     <template v-if="modalScope === DELETE_SPACE">
@@ -110,7 +132,7 @@
         >
           Annuler
         </Button>
-        
+
         <Button class="bg-thirdary text-white hover:bg-opacity-90 transition-colors duration-200">
           Supprimer mon compte définitivement
         </Button>
@@ -162,7 +184,7 @@ export default {
       this.showModal = true;
       this.modalScope = scope;
 
-      this.selectedSpace = space ? space : '';
+      this.selectedSpace = space ? Object.assign({}, space) : '';
     }
   }
 };
