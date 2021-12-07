@@ -1,10 +1,18 @@
 <template>
   <section class="flex h-screen">
     <div class="m-auto">
-      <h1 class="font-black text-title-max font-text flex select-none">
-        {{ animatedTitle }}
-        <span class="text-primary">.</span>
-      </h1>
+      <img
+        v-show="animOver"
+        alt="fellow animation"
+        :src="fellowFixed"
+        class="w-80"
+      >
+      <img
+        v-show="!animOver"
+        alt="fellow animation"
+        :src="fellowAnim"
+        class="w-80"
+      >
     </div>
   </section>
 </template>
@@ -13,35 +21,26 @@
 export default {
   name: 'StartAnimation',
   data: () => ({
-    animatedTitle: 'f',
-    fellowArray: ['f', 'e', 'l', 'l', 'o', 'w']
+    fellowAnim: require('../assets/images/fellow-anim.gif'),
+    fellowFixed: require('../assets/images/fellow-fixed.jpg'),
+    animOver: false
   }),
   mounted() {
     this.animateTitle();
   },
   methods: {
     animateTitle() {
-      let letterNumber = 1;
       setTimeout(() => {
-        let animateTitle = setInterval(() => {
-          this.animatedTitle += this.fellowArray[letterNumber];
-          letterNumber++;
-
-          if (letterNumber >= this.fellowArray.length)
-            clearInterval(animateTitle);
-        }, 90);
+        this.animOver = true;
 
         setTimeout(() => {
           this.$store.dispatch('setStartAnimationOver', true);
-        }, 2000);
-      }, 1500);
+        }, 1000);
+      }, 2800);
     }
   }
 };
 </script>
 
 <style scoped>
-.h1 {
-  transition-duration: 1s;
-}
 </style>
