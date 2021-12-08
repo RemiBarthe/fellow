@@ -4,13 +4,13 @@
       <img
         v-show="animOver"
         alt="fellow animation"
-        :src="fellowFixed"
+        src="../assets/images/fellow-fixed.png"
         class="w-80"
       >
       <img
         v-show="!animOver"
         alt="fellow animation"
-        :src="fellowAnim"
+        src="../assets/images/fellow-anim.png"
         class="w-80"
       >
     </div>
@@ -21,8 +21,6 @@
 export default {
   name: 'StartAnimation',
   data: () => ({
-    fellowAnim: require('../assets/images/fellow-anim.gif'),
-    fellowFixed: require('../assets/images/fellow-fixed.jpg'),
     animOver: false
   }),
   mounted() {

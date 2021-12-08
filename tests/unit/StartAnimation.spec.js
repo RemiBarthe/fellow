@@ -23,13 +23,6 @@ describe('StartAnimation.vue', () => {
     }
   });
 
-  it('renders the title using data', async () => {
-    expect(wrapper.text()).toContain('f .');
-
-    await wrapper.setData({ animatedTitle: 'fellow .' });
-    expect(wrapper.text()).toContain('fellow .');
-  });
-
   it('calls store "setStartAnimationOver" action', async () => {
     store.commit('SET_START_ANIMATION_OVER', true);
     expect(store.state.startAnimationOver).toBe(true);
@@ -38,7 +31,6 @@ describe('StartAnimation.vue', () => {
   it('calls "animateTitle" function on mount', () => {
     jest.useFakeTimers();
     jest.spyOn(global, 'setTimeout');
-    jest.spyOn(global, 'setInterval');
 
     wrapper = mount(StartAnimation, {
       global: {
@@ -54,6 +46,5 @@ describe('StartAnimation.vue', () => {
 
     jest.runAllTimers();
     expect(setTimeout).toHaveBeenCalledTimes(2);
-    expect(setInterval).toBeCalledTimes(1);
   });
 });
