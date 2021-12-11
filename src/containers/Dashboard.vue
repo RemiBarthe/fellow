@@ -48,6 +48,8 @@
           </p>
         </vc-donut>
       </div>
+
+      <LineChart :chart-data="ticketsInTime" />
     </div>
   </div>
 </template>
@@ -57,15 +59,50 @@ import { mapState } from 'vuex';
 import Button from '../components/Button.vue';
 import TicketCardList from '../components/TicketCardList.vue';
 import { TICKET_STATES } from "../utils/ticketStates";
+import { LineChart } from 'vue-chart-3';
 
 export default {
   name: 'Dashboard',
   components: {
     Button,
-    TicketCardList
+    TicketCardList,
+    LineChart
   },
   data: () => ({
-    ticketStates: TICKET_STATES
+    ticketStates: TICKET_STATES,
+    ticketsInTime: {
+      labels: ['01/12/21', '02/12/21', '03/12/21', '04/12/21'],
+      datasets: [
+        {
+          label: 'À faire',
+          data: [4, 6, 5, 3],
+          borderColor: '#59C3C3',
+          backgroundColor: '#59C3C3',
+          tension: 0.4
+        },
+        {
+          label: 'En cours',
+          data: [2, 1, 2, 0],
+          borderColor: '#4062BB',
+          backgroundColor: '#4062BB',
+          tension: 0.4
+        },
+        {
+          label: 'Bloqué',
+          data: [0, 0, 1, 0],
+          borderColor: '#F45B69',
+          backgroundColor: '#F45B69',
+          tension: 0.4
+        },
+        {
+          label: 'Terminé',
+          data: [0, 1, 3, 4],
+          borderColor: '#B0B0B0',
+          backgroundColor: '#B0B0B0',
+          tension: 0.4
+        },
+      ],
+    }
   }),
   computed: {
     ...mapState(['selectedSpace', 'tickets']),
