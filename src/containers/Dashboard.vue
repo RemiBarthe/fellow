@@ -49,7 +49,10 @@
         </vc-donut>
       </div>
 
-      <LineChart :chart-data="ticketsInTime" />
+      <LineChart
+        :chart-data="ticketsInTime"
+        class="max-h-60"
+      />
     </div>
   </div>
 </template>
@@ -96,7 +99,7 @@ export default {
         },
         {
           label: 'Terminé',
-          data: [0, 1, 3, 4],
+          data: [13, 16, 17, 18],
           borderColor: '#B0B0B0',
           backgroundColor: '#B0B0B0',
           tension: 0.4
