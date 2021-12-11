@@ -29,23 +29,25 @@
       <p class="font-bold pb-2">
         Statistiques
       </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras varius sed
-        dolor ultrices mattis. Quisque vel tortor sit amet elit porta convallis
-        at a ligula. <br>Ut ornare massa non magna molestie, vel consequat
-        velit posuere. Donec vitae urna sed nulla euismod porta et vitae libero.
-        Vestibulum sodales, quam at bibendum cursus, quam justo facilisis urna,
-        id elementum dui nibh at nisi. Class aptent taciti sociosqu ad litora
-        torquent per conubia nostra, per inceptos himenaeos. <br><br>Sed
-        sodales malesuada ex ut varius. Curabitur pharetra vitae velit ac
-        ultricies. Vestibulum lorem nisi, porta quis tempor in, tristique eu
-        metus. Nulla gravida eleifend felis eget lacinia. <br>Pellentesque
-        congue, dolor nec placerat rutrum, nibh risus viverra augue, vitae
-        placerat lacus velit vel nibh. Nam cursus, justo in vestibulum mattis,
-        risus dolor facilisis dolor, eu viverra massa dolor sed est. Sed nec
-        tincidunt sapien. Suspendisse eu tortor malesuada, condimentum felis
-        eget, malesuada enim.
-      </p>
+      
+
+      <div class="w-48 sm:w-72 mx-auto">
+        <p class="font-bold pb-2 text-center">
+          Tickets totaux
+        </p>
+        <vc-donut
+          :sections="ticketStatistics"
+          :total="ticketCount"
+          :has-legend="true"
+          :size="100"
+          unit="%"
+          :thickness="45"
+        >
+          <p class="font-bold text-base leading-3">
+            <span class="text-title">{{ ticketCount }}</span><br>tickets
+          </p>
+        </vc-donut>
+      </div>
     </div>
   </div>
 </template>
@@ -72,6 +74,30 @@ export default {
     },
     todoTickets(){
       return this.tickets.filter(ticket => ticket.state === this.ticketStates[0].key);
+    },
+    ticketCount(){
+      return this.tickets.length;
+    },
+    ticketStatistics(){
+      const countTicketState = {
+        todo: 0,
+        done: 0,
+        bloqued: 0,
+        inprogress: 0
+      };
+      this.tickets.map(ticket => {
+        countTicketState[ticket.state]++;
+      });
+
+      const sectionTicketStats = [
+        { label: 'À faire', value: countTicketState.todo, color: '#59C3C3' },
+        { label: 'Bloqué', value: countTicketState.bloqued, color: '#F45B69' },
+        { label: 'Terminé', value: countTicketState.done, color: '#B0B0B0' },
+        { label: 'En cours', value: countTicketState.inprogress, color: '#4062BB' },
+
+      ];
+      
+      return sectionTicketStats;
     }
   }
 };
