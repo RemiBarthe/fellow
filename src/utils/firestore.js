@@ -1,5 +1,5 @@
 import { db } from '../firebase';
-import { doc,  collection, setDoc, addDoc, increment, deleteDoc } from 'firebase/firestore';
+import { doc,  collection, setDoc, addDoc, getDoc, increment, deleteDoc } from 'firebase/firestore';
 
 export const setUserDocument = (user) => {
   const userRef = doc(db, 'users', user.uid);
@@ -107,4 +107,35 @@ export const setSpaceDocument = (userId, space) => {
     space.id
   );
   return setDoc(SpaceRef, space, { merge: true });
+};
+
+export const getStatisticsDocument = async (userId, spaceId, statsId) => {
+  const StatsRef = doc(
+    db,
+    'users',
+    userId,
+    'spaces',
+    spaceId,
+    'statistics',
+    statsId
+  );
+  const docStats = await getDoc(StatsRef);
+
+  if (docStats.exists()) {
+    return docStats.data();
+  }
+  return false;
+};
+
+export const setStatisticsDocument = (userId, spaceId, stats) => {
+  const StatsRef = doc(
+    db,
+    'users',
+    userId,
+    'spaces',
+    spaceId,
+    'statistics',
+    stats.id
+  );
+  return setDoc(StatsRef, stats, { merge: true });
 };

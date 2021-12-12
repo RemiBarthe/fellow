@@ -55,12 +55,14 @@
 import { mapState } from "vuex";
 import { setTicketDocument } from '../utils/firestore';
 import { Icon } from '@iconify/vue';
+import statisticsMixin from "../mixins/statisticsMixin";
 
 export default {
   name: 'TodoList',
   components: {
     Icon
   },
+  mixins: [statisticsMixin],
   props: {
     short: {
       type: Boolean,
@@ -108,6 +110,7 @@ export default {
       this.currentTicket.updateDate = new Date();
       this.currentTicket.todoListDonePercentage = this.donePercentage;
       setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
+      this.updateStatistics(this.connectedUser.uid, this.selectedSpace.id, this.tickets);
     },
     removeTodoItem(id) {
       this.currentTicket.todoList = this.currentTodoList.filter(item => item.id !== id);

@@ -117,6 +117,7 @@ import Modal from '../components/Modal.vue';
 import moment from 'moment';
 import { TICKET_STATES } from "../utils/ticketStates";
 import TodoList from "../components/TodoList.vue";
+import statisticsMixin from "../mixins/statisticsMixin";
 
 export default {
   name: 'TicketList',
@@ -126,6 +127,7 @@ export default {
     Modal,
     TodoList
   },
+  mixins: [statisticsMixin],
   data: () => ({
     routePath: '',
     blockFirstEdit: false,
@@ -174,6 +176,7 @@ export default {
       if(!this.blockFirstEdit){
         this.currentTicket.updateDate = new Date();
         setTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
+        this.updateStatistics(this.connectedUser.uid, this.selectedSpace.id, this.tickets);
       }
       this.blockFirstEdit = false;
     }, 1000),
@@ -184,6 +187,7 @@ export default {
     },
     deleteTicket() {
       deleteTicketDocument(this.connectedUser.uid, this.selectedSpace.id, this.currentTicket);
+      this.updateStatistics(this.connectedUser.uid, this.selectedSpace.id, this.tickets);
     },
     updateTicketState(state){
       this.currentTicket.state = state;
