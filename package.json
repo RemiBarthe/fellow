@@ -13,6 +13,7 @@
     "@tailwindcss/postcss7-compat": "^2.2.16",
     "@vueup/vue-quill": "^1.0.0-beta.7",
     "autoprefixer": "^9.8.7",
+    "chart.js": "^3.6.2",
     "core-js": "^3.6.5",
     "firebase": "^9.1.1",
     "lodash": "^4.17.21",
