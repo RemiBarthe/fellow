@@ -29,23 +29,30 @@
       <p class="font-bold pb-2">
         Statistiques
       </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras varius sed
-        dolor ultrices mattis. Quisque vel tortor sit amet elit porta convallis
-        at a ligula. <br>Ut ornare massa non magna molestie, vel consequat
-        velit posuere. Donec vitae urna sed nulla euismod porta et vitae libero.
-        Vestibulum sodales, quam at bibendum cursus, quam justo facilisis urna,
-        id elementum dui nibh at nisi. Class aptent taciti sociosqu ad litora
-        torquent per conubia nostra, per inceptos himenaeos. <br><br>Sed
-        sodales malesuada ex ut varius. Curabitur pharetra vitae velit ac
-        ultricies. Vestibulum lorem nisi, porta quis tempor in, tristique eu
-        metus. Nulla gravida eleifend felis eget lacinia. <br>Pellentesque
-        congue, dolor nec placerat rutrum, nibh risus viverra augue, vitae
-        placerat lacus velit vel nibh. Nam cursus, justo in vestibulum mattis,
-        risus dolor facilisis dolor, eu viverra massa dolor sed est. Sed nec
-        tincidunt sapien. Suspendisse eu tortor malesuada, condimentum felis
-        eget, malesuada enim.
-      </p>
+      
+
+      <div class="w-48 sm:w-72 mx-auto">
+        <p class="font-bold pb-2 text-center">
+          Tickets totaux
+        </p>
+        <vc-donut
+          :sections="ticketStatisticsDonut"
+          :total="ticketCount"
+          :has-legend="true"
+          :size="100"
+          unit="%"
+          :thickness="45"
+        >
+          <p class="font-bold text-base leading-3">
+            <span class="text-title">{{ ticketCount }}</span><br>tickets
+          </p>
+        </vc-donut>
+      </div>
+
+      <LineChart
+        :chart-data="ticketsInTime"
+        class="max-h-60"
+      />
     </div>
   </div>
 </template>
@@ -55,23 +62,107 @@ import { mapState } from 'vuex';
 import Button from '../components/Button.vue';
 import TicketCardList from '../components/TicketCardList.vue';
 import { TICKET_STATES } from "../utils/ticketStates";
+import { getStatisticsDocument } from '../utils/firestore';
+import { LineChart } from 'vue-chart-3';
+import moment from 'moment';
 
 export default {
   name: 'Dashboard',
   components: {
     Button,
-    TicketCardList
+    TicketCardList,
+    LineChart
   },
   data: () => ({
-    ticketStates: TICKET_STATES
+    ticketStates: TICKET_STATES,
+    ticketsInTime: {
+      labels: [],
+      datasets: [
+        {
+          label: 'À faire',
+          data: [],
+          borderColor: '#59C3C3',
+          backgroundColor: '#59C3C3',
+          tension: 0.4
+        },
+        {
+          label: 'En cours',
+          data: [],
+          borderColor: '#4062BB',
+          backgroundColor: '#4062BB',
+          tension: 0.4
+        },
+        {
+          label: 'Bloqué',
+          data: [],
+          borderColor: '#F45B69',
+          backgroundColor: '#F45B69',
+          tension: 0.4
+        },
+        {
+          label: 'Terminé',
+          data: [],
+          borderColor: '#B0B0B0',
+          backgroundColor: '#B0B0B0',
+          tension: 0.4
+        },
+      ],
+    }
   }),
   computed: {
-    ...mapState(['selectedSpace', 'tickets']),
+    ...mapState(['connectedUser', 'selectedSpace', 'tickets']),
     inprogressTickets(){
       return this.tickets.filter(ticket => ticket.state === this.ticketStates[1].key);
     },
     todoTickets(){
       return this.tickets.filter(ticket => ticket.state === this.ticketStates[0].key);
+    },
+    ticketCount(){
+      return this.tickets.length;
+    },
+    ticketStatisticsDonut(){
+      const countTicketState = {
+        todo: 0,
+        done: 0,
+        bloqued: 0,
+        inprogress: 0
+      };
+      this.tickets.map(ticket => {
+        countTicketState[ticket.state]++;
+      });
+
+      const sectionTicketStats = [
+        { label: 'À faire', value: countTicketState.todo, color: '#59C3C3' },
+        { label: 'Bloqué', value: countTicketState.bloqued, color: '#F45B69' },
+        { label: 'Terminé', value: countTicketState.done, color: '#B0B0B0' },
+        { label: 'En cours', value: countTicketState.inprogress, color: '#4062BB' },
+
+      ];
+      
+      return sectionTicketStats;
+    }
+  },
+  watch: {
+    selectedSpace() {
+      this.setTicketsInTimeData();
+    }
+  },
+  created(){
+    this.setTicketsInTimeData();
+  },
+  methods: {
+    async setTicketsInTimeData(){
+      const monthYearDate =  moment(new Date()).format("MMYY");
+      const statistics = await getStatisticsDocument(this.connectedUser.uid, this.selectedSpace.id, monthYearDate);
+
+      if(statistics){
+        this.ticketsInTime.labels = statistics.labels;
+        this.ticketsInTime.datasets[0].data = statistics.todo;
+        this.ticketsInTime.datasets[1].data = statistics.inprogress;
+        this.ticketsInTime.datasets[2].data = statistics.bloqued;
+        this.ticketsInTime.datasets[3].data = statistics.done;
+
+      }
     }
   }
 };
