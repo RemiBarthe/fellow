@@ -36,7 +36,7 @@
           Tickets totaux
         </p>
         <vc-donut
-          :sections="ticketStatistics"
+          :sections="ticketStatisticsDonut"
           :total="ticketCount"
           :has-legend="true"
           :size="100"
@@ -62,7 +62,9 @@ import { mapState } from 'vuex';
 import Button from '../components/Button.vue';
 import TicketCardList from '../components/TicketCardList.vue';
 import { TICKET_STATES } from "../utils/ticketStates";
+import { getStatisticsDocument } from '../utils/firestore';
 import { LineChart } from 'vue-chart-3';
+import moment from 'moment';
 
 export default {
   name: 'Dashboard',
@@ -74,32 +76,32 @@ export default {
   data: () => ({
     ticketStates: TICKET_STATES,
     ticketsInTime: {
-      labels: ['01/12/21', '02/12/21', '03/12/21', '04/12/21'],
+      labels: [],
       datasets: [
         {
           label: 'À faire',
-          data: [4, 6, 5, 3],
+          data: [],
           borderColor: '#59C3C3',
           backgroundColor: '#59C3C3',
           tension: 0.4
         },
         {
           label: 'En cours',
-          data: [2, 1, 2, 0],
+          data: [],
           borderColor: '#4062BB',
           backgroundColor: '#4062BB',
           tension: 0.4
         },
         {
           label: 'Bloqué',
-          data: [0, 0, 1, 0],
+          data: [],
           borderColor: '#F45B69',
           backgroundColor: '#F45B69',
           tension: 0.4
         },
         {
           label: 'Terminé',
-          data: [13, 16, 17, 18],
+          data: [],
           borderColor: '#B0B0B0',
           backgroundColor: '#B0B0B0',
           tension: 0.4
@@ -108,7 +110,7 @@ export default {
     }
   }),
   computed: {
-    ...mapState(['selectedSpace', 'tickets']),
+    ...mapState(['connectedUser', 'selectedSpace', 'tickets']),
     inprogressTickets(){
       return this.tickets.filter(ticket => ticket.state === this.ticketStates[1].key);
     },
@@ -118,7 +120,7 @@ export default {
     ticketCount(){
       return this.tickets.length;
     },
-    ticketStatistics(){
+    ticketStatisticsDonut(){
       const countTicketState = {
         todo: 0,
         done: 0,
@@ -138,6 +140,29 @@ export default {
       ];
       
       return sectionTicketStats;
+    }
+  },
+  watch: {
+    selectedSpace() {
+      this.setTicketsInTimeData();
+    }
+  },
+  created(){
+    this.setTicketsInTimeData();
+  },
+  methods: {
+    async setTicketsInTimeData(){
+      const monthYearDate =  moment(new Date()).format("MMYY");
+      const statistics = await getStatisticsDocument(this.connectedUser.uid, this.selectedSpace.id, monthYearDate);
+
+      if(statistics){
+        this.ticketsInTime.labels = statistics.labels;
+        this.ticketsInTime.datasets[0].data = statistics.todo;
+        this.ticketsInTime.datasets[1].data = statistics.inprogress;
+        this.ticketsInTime.datasets[2].data = statistics.bloqued;
+        this.ticketsInTime.datasets[3].data = statistics.done;
+
+      }
     }
   }
 };
