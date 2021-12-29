@@ -100,10 +100,40 @@
       class="px-2.5 py-1 rounded text-thirdary text-title float-right
       hover:bg-thirdary hover:bg-opacity-20 transition-colors duration-200 ease-in-out mt-4 mb-4 tooltip tooltip-bottom"
       data-title="Supprimer le ticket"
-      @click="deleteTicket"
+      @click="showDeleteModal = true"
     >
       <Icon icon="fluent:delete-16-regular" /> 
     </button>
+
+    <Modal
+      v-if="showDeleteModal"
+      @closeModal="showDeleteModal = false"
+    >
+      <h3 class="text-base-lg font-bold mb-5">
+        Suppression du ticket
+      </h3>
+
+      <p class="mb-5">
+        <span class="font-bold text-thirdary">Attention : </span> cette action est irréversible.
+        <br> Êtes-vous sur de vouloir <span class="font-bold">supprimer</span> votre ticket <span class="font-bold">{{ currentTicket.title }}</span> définitivement ?
+      </p>
+
+      <div class="flex justify-end gap-1">
+        <Button
+          class="bg-black bg-opacity-0 hover:bg-opacity-20 transition-colors duration-200"
+          @click="showDeleteModal=false"
+        >
+          Annuler
+        </Button>
+
+        <Button
+          class="bg-thirdary text-white hover:bg-opacity-90 transition-colors duration-200"
+          @click="deleteTicket()"
+        >
+          Supprimer définitivement
+        </Button>
+      </div>
+    </Modal>
   </template>
 </template>
 
@@ -114,6 +144,7 @@ import { setTicketDocument, deleteTicketDocument } from '../utils/firestore';
 import contenteditable from 'vue-contenteditable';
 import { Icon } from '@iconify/vue';
 import Modal from '../components/Modal.vue';
+import Button from '../components/Button.vue';
 import moment from 'moment';
 import { TICKET_STATES } from "../utils/ticketStates";
 import TodoList from "../components/TodoList.vue";
@@ -125,6 +156,7 @@ export default {
     contenteditable,
     Icon,
     Modal,
+    Button,
     TodoList
   },
   mixins: [statisticsMixin],
@@ -133,7 +165,8 @@ export default {
     blockFirstEdit: false,
     ticketStates: TICKET_STATES,
     slugCurrentTicket: '',
-    showEditSlugModal: false
+    showEditSlugModal: false,
+    showDeleteModal: false
   }),
   computed: {
     ...mapState(['tickets', 'connectedUser', 'selectedSpace']),
